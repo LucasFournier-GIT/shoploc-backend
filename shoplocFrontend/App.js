@@ -1,22 +1,22 @@
-import { StyleSheet, View, SafeAreaView, Button, Alert, StatusBar } from 'react-native';
+import React, { useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import LoginScreen from './components/screens/LoginScreen';
+import CreateAccountScreen from './components/screens/CreateAccountScreen';
+import { StatusBar, View } from 'react-native';
+import { AppLoading } from 'expo';
+
+const Stack = createStackNavigator();
 
 export default function App() {
+
   return (
-    <View style={styles.container}>
-      <StatusBar
-        animated={true}
-        backgroundColor="#5D3528"
-      />
-      <Button color="#5D3528" title="Entrer" onPress={() => Alert.alert("Titre", "Message", [{text: "Oui", onPress: () => console.log("Oui")}, {text: "Non", onPress: () => console.log("Non")}])}></Button>
-    </View>
+
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="LoginScreen">
+          <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }}/>
+          <Stack.Screen name="CreateAccountScreen" component={CreateAccountScreen} options={{ headerShown: false }}/>
+        </Stack.Navigator>
+      </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignContent: "center",
-    height: '50%',
-    width: '50%',
-    backgroundColor: 'lightblue'
-  }
-});
