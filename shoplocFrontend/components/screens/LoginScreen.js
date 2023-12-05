@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import App from '../../App';
 import CustomInput from '../CustomInput';
 import CustomButton from '../CustomButton';
 import { useNavigation } from '@react-navigation/native';
@@ -16,7 +15,7 @@ const LoginScreen = ({ navigation }) => {
         <Text style={styles.heading2}>Connexion</Text>
         <CustomInput type={"email-address"} label={"Votre adresse email"} placeholder={"Entrez votre adresse email"}/>
         <CustomInput type={"password"} label={"Votre mot de passe"} placeholder={"Entrez votre mot de passe"}/>
-        <CustomButton text={"Se connecter"}/>
+        <CustomButton text={"Se connecter"}  onPress={() => navigation.navigate('HomeScreen')}/>
         <Text style={styles.createAccountText}>
           Pas de compte ? <Text style={styles.createAccountLink} onPress={() => navigation.navigate('CreateAccountScreen')}>Créer un compte</Text>
         </Text>

@@ -5,6 +5,8 @@ import LoginScreen from './components/screens/LoginScreen';
 import CreateAccountScreen from './components/screens/CreateAccountScreen';
 import { StatusBar, View } from 'react-native';
 import { AppLoading } from 'expo';
+import Homescreen from './components/screens/HomeScreen';
+import ShopScreen from './components/screens/ShopScreen';
 
 const Stack = createStackNavigator();
 
@@ -16,6 +18,8 @@ export default function App() {
         <Stack.Navigator initialRouteName="LoginScreen">
           <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }}/>
           <Stack.Screen name="CreateAccountScreen" component={CreateAccountScreen} options={{ headerShown: false }}/>
+          <Stack.Screen name="HomeScreen" component={Homescreen} options={{ headerShown: false }}/>
+          <Stack.Screen name="ShopScreen" component={ShopScreen} options={{headerShown: false}} />
         </Stack.Navigator>
       </NavigationContainer>
   );
