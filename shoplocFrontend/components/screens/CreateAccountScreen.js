@@ -1,19 +1,22 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import CustomInput from '../CustomInput';
 import CustomButton from '../CustomButton';
 
-const CreateAccountScreen = () => {
+const CreateAccountScreen = ({navigation}) => {
     return (
         <View style={styles.container}>
         <Text style={styles.heading}>Bienvenue</Text>
         <View style={styles.content}>
+        <ScrollView>
+
           <Text style={styles.heading2}>Inscription</Text>
           <CustomInput type={"text"} label={"Votre nom"} placeholder={"Votre nom"}/>
           <CustomInput type={"email-address"} label={"Votre adresse email"} placeholder={"Votre adresse email"}/>
           <CustomInput type={"text"} label={"Votre immatrirculation (facultative)"} placeholder={"Votre numéro d'immatriculation"}/>
           <CustomInput type={"password"} label={"Votre mot de passe"} placeholder={"Votre mot de passe"}/>
           <CustomInput type={"password"} label={"Confirmation - Votre mot de passe"} placeholder={"Votre mot de passe"}/>
-          <CustomButton text={"Créer un compte"}/>
+          </ScrollView>
+          <CustomButton text={"Créer un compte"} />
           <Text style={styles.footer}>
               ShopLoc by SEQI
           </Text>
