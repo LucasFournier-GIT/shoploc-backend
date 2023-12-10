@@ -31,9 +31,18 @@ const CartScreen = ({ navigation }) => {
         },
       ];
       
-
       const handleValidateAll = () => {
-        navigation.navigate("RecapCart", { storeCarts });
+        const totalAmount = storeCarts.reduce((acc, store) => {
+          return (
+            acc +
+            store.products.reduce((storeAcc, product) => {
+              return storeAcc + product.quantity * product.price;
+            }, 0)
+          );
+        }, 0);
+        
+        navigation.navigate("RecapCart", { TotalAmount: totalAmount });
+
       };
       
   return (

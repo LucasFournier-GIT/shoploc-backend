@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import CartItem from './CartItem';
 
 const ShopCartSummary = ({ store, navigation }) => {
@@ -7,21 +7,40 @@ const ShopCartSummary = ({ store, navigation }) => {
     // Logique pour retirer un produit du panier
   };
 
-  const handleIncrease = (productId) => {
-    // Logique pour augmenter la quantité d'un produit dans le panier
-    // Assurez-vous de mettre à jour l'état ou le contenu du panier du magasin
-    // Exemple : setStore({ ...store, products: updatedProducts });
-  };
+// Fonction pour augmenter la quantité d'un produit dans le panier
+const handleIncrease = (productId) => {
+  // Trouver le produit dans le panier en fonction de son ID (productId)
+  //const updatedProducts = store.products.map((product) => {
+  //  if (product.id === productId) {
+  //    return { ...product, quantity: product.quantity + 1 };
+  //  }
+  //  return product;
+  //S});
 
-  const handleDecrease = (productId) => {
-    // Logique pour diminuer la quantité d'un produit dans le panier
-    // Assurez-vous de gérer le cas où la quantité atteint zéro pour retirer le produit du panier
-    // Exemple : removeFromCart(productId);
-  };
+  // Mettre à jour le panier avec la quantité mise à jour du produit
+  //setStore({ ...store, products: updatedProducts });
+};
 
-  const handleValidate = () => {
-    navigation.navigate("RecapCart", { store });
-  };
+// Fonction pour diminuer la quantité d'un produit dans le panier
+const handleDecrease = (productId) => {
+  // Trouver le produit dans le panier en fonction de son ID (productId)
+  //const updatedProducts = store.products.map((product) => {
+  //  if (product.id === productId && product.quantity > 0) {
+  //    return { ...product, quantity: product.quantity - 1 };
+  //  }
+  //  return product;
+  //});
+
+  // Mettre à jour le panier avec la quantité mise à jour du produit
+};
+
+const handleValidate = () => {
+  const totalAmount = store.products.reduce((acc, product) => {
+    return acc + product.price * product.quantity;
+  }, 0);
+
+  navigation.navigate("RecapCart", { TotalAmount: totalAmount });
+};
 
   return (
     <View style={styles.container}>
@@ -37,8 +56,8 @@ const ShopCartSummary = ({ store, navigation }) => {
         />
       ))}
       <TouchableOpacity style={styles.button} onPress={handleValidate}>
-        <Text style={styles.buttonText} >
-            Valider
+        <Text style={styles.buttonText}>
+          Valider
         </Text>
       </TouchableOpacity>
     </View>
@@ -46,26 +65,28 @@ const ShopCartSummary = ({ store, navigation }) => {
 };
 
 const styles = StyleSheet.create({
-    heading2: {
+  heading2: {
     color: '#5D3528',
     fontSize: 20,
     marginBottom: 15
   },
-  button:{
-    backgroundColor:"#275C50",
-    padding:5,
-    borderRadius:32.5,
-    elevation:5,
-    //alignSelf:"center",
-    //right:0,
-    alignSelf:"flex-end",
-    alignItems:'center',
+  container: {
+    // Styles pour le conteneur global du composant ShopCartSummary
   },
-  buttonText:{
-    color:"#fff",
-    marginVertical:5,
-    marginHorizontal:10
+  button: {
+    backgroundColor: "#275C50",
+    padding: 5,
+    borderRadius: 32.5,
+    elevation: 5,
+    alignSelf: "flex-end",
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: "#fff",
+    marginVertical: 5,
+    marginHorizontal: 10
   }
+
 });
 
 export default ShopCartSummary;

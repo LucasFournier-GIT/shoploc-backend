@@ -8,12 +8,12 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 // Calcul de la somme totale des produits (price * quantity)
   const RecapCart = ({ navigation, route }) => {
-    const { store } = route.params;
+    const { TotalAmount } = route.params;
   
     // Calcul du prix total du panier du magasin
-    const storeTotalAmount = store.products.reduce((acc, product) => {
-      return acc + product.price * product.quantity;
-    }, 0);
+    //const storeTotalAmount = store.products.reduce((acc, product) => {
+    //  return acc + product.price * product.quantity;
+    //}, 0);
   
     return (
       <View>
@@ -21,7 +21,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
           {/* Affichage des produits du panier */}
         </ScrollView>
         <View>
-          <Text>Prix total du panier: {storeTotalAmount}</Text>
+          <Text>Prix total du panier: {TotalAmount}</Text>
         </View>
         <TouchableOpacity>
           <Text>Valider ce panier</Text>

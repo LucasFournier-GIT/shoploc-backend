@@ -16,14 +16,12 @@ const ProductCard = ({ navigation, name, id, quantity, description, imageUrl }) 
 
   return (
     <View style={styles.card}>
-      <TouchableOpacity onPress={() => navigation.navigate('ProductDetails', { productId: id })}>
         <Image source={{ uri: imageUrl }} style={styles.image} />
         <Text style={styles.name}>{name}</Text>
         <Text style={[styles.quantity, { color: quantity === 0 ? '#e74c3c' : '#2ecc71' }]}>
           {quantity === 0 ? 'Rupture de stock' : `En stock: ${quantity}`}
         </Text>
         <Text style={styles.description}>{description}</Text>
-      </TouchableOpacity>
 
       {quantity > 0 && (
         <View style={styles.addToCart}>
