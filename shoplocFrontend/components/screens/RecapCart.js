@@ -1,33 +1,68 @@
-import { ScrollView, Text } from "react-native";
+import { ScrollView, StyleSheet, Text } from "react-native";
 import { View } from "react-native-animatable";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import CustomButton from "./../CustomButton";
+import CustomNavBar from "../CustomNavBar";
 
-//Recuperation des éléments du panier
-
-  
 
 // Calcul de la somme totale des produits (price * quantity)
   const RecapCart = ({ navigation, route }) => {
     const { TotalAmount } = route.params;
   
-    // Calcul du prix total du panier du magasin
-    //const storeTotalAmount = store.products.reduce((acc, product) => {
-    //  return acc + product.price * product.quantity;
-    //}, 0);
+    const handleCancel = () => {
+      navigation.navigate("CartScreen");
+    }
+
+    const handleValidate = () => {
   
+    }
+
     return (
-      <View>
-        <ScrollView>
-          {/* Affichage des produits du panier */}
-        </ScrollView>
-        <View>
-          <Text>Prix total du panier: {TotalAmount}</Text>
+      <View style = {styles.container}>
+        <View style={styles.card}>
+          <View>
+            <Text style={styles.text}>Vous allez valider un panier d'un montant de <Text style={styles.amount}>{TotalAmount}€</Text>. Êtes-vous sûr de vouloir valider ce panier ? </Text>
+          </View>
+          <View style={styles.row}>
+            <CustomButton text={"Annuler"} onPress={handleCancel}></CustomButton>
+            <CustomButton text={"Payer ce panier"} onPress={handleValidate}></CustomButton>
+          </View>
         </View>
-        <TouchableOpacity>
-          <Text>Valider ce panier</Text>
-        </TouchableOpacity>
+        <CustomNavBar></CustomNavBar>
       </View>
+
     );
   };
-
-export default RecapCart;
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    card: {
+      backgroundColor: "#fff",
+      borderRadius: 32.5,
+      padding: 20,
+      elevation: 5,
+      maxWidth: 300, // Ajuster la largeur de la carte selon les besoins
+    },
+    amount: {
+      fontWeight: "bold",
+      color: "#275C50",
+    },
+    text: {
+      textAlign: "center",
+      fontSize: 18,
+      marginBottom: 60,
+    },
+    row:{
+      position:"absolute",
+      bottom:0,
+      alignSelf:"center",
+      flexDirection:"row",
+      marginBottom:5,
+    }
+  });
+  
+  export default RecapCart;
+  

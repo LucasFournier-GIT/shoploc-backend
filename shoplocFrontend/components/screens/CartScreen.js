@@ -40,8 +40,8 @@ const CartScreen = ({ navigation }) => {
             }, 0)
           );
         }, 0);
-        
-        navigation.navigate("RecapCart", { TotalAmount: totalAmount });
+
+        navigation.navigate("RecapCart", { TotalAmount: totalAmount, navigation: navigation });
 
       };
       

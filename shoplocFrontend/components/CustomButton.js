@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'flex-end', 
+    margin:2,
   },
   buttonText: {
     fontSize: 17,
