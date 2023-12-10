@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 
-const CustomInput = ({ type, label, placeholder }) => {
-  const [inputValue, setInputValue] = useState(''); // Utilisation de "inputValue" au lieu de "text"
+const CustomInput = ({ type, label, placeholder, onChange }) => {
+  const [inputValue, setInputValue] = useState('');
+
+  const handleInputChange = (value) => {
+    setInputValue(value);
+    if (onChange) {
+      onChange(value);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -11,10 +18,9 @@ const CustomInput = ({ type, label, placeholder }) => {
         <TextInput
           style={styles.input}
           placeholderTextColor="#999999"
-          value={inputValue} // Utilisation de "inputValue" ici
-          onChangeText={(value) => setInputValue(value)} // Mise à jour de "inputValue"
           secureTextEntry={type === 'password'}
-          keyboardType={type === 'email' ? 'email-address' : 'default'}
+          keyboardType={type === 'email-address' ? 'email-address' : 'default'}
+          onChangeText={handleInputChange}
         />
         {inputValue === '' && (
           <Text style={styles.placeholder}>{placeholder}</Text>

@@ -12,7 +12,7 @@ const CustomNavBar = ({navigation}) => {
             <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
                 <Text style={styles.navText}>Traj</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
+            <TouchableOpacity onPress={() => navigation.navigate('CartScreen')}>
                 <Text style={styles.navText}>Pani</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
