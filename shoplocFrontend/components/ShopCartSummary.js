@@ -39,7 +39,7 @@ const handleValidate = () => {
     return acc + product.price * product.quantity;
   }, 0);
 
-  navigation.navigate("RecapCart", { TotalAmount: totalAmount, navigation: navigation });
+  navigation.navigate("RecapCartScreen", { TotalAmount: totalAmount, navigation: navigation });
 };
 
   return (

@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     position: 'relative',
     width: '100%',
+    
   },
   input: {
     borderWidth: 2,
@@ -49,6 +50,7 @@ const styles = StyleSheet.create({
     borderRadius: 32.5,
     padding: 10,
     fontSize: 15,
+    backgroundColor:"white"
   },
   placeholder: {
     position: 'absolute',

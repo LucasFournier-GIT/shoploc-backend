@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet, Text } from "react-native";
 import { View } from "react-native-animatable";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import CustomButton from "./../CustomButton";
+import CustomButton from "../CustomButton";
 import CustomNavBar from "../CustomNavBar";
 
 
@@ -14,7 +14,7 @@ import CustomNavBar from "../CustomNavBar";
     }
 
     const handleValidate = () => {
-  
+      navigation.navigate("PaymentScreen", {navigation:navigation, TotalAmount:TotalAmount})
     }
 
     return (
@@ -28,7 +28,7 @@ import CustomNavBar from "../CustomNavBar";
             <CustomButton text={"Payer ce panier"} onPress={handleValidate}></CustomButton>
           </View>
         </View>
-        <CustomNavBar></CustomNavBar>
+        <CustomNavBar navigation={navigation}></CustomNavBar>
       </View>
 
     );
