@@ -45,6 +45,7 @@ const ProductCard = ({ navigation, name, id, quantity, description, imageUrl }) 
 
 const styles = StyleSheet.create({
   card: {
+    position: 'relative',
     borderColor: '#ccc',
     borderRadius: 32.5,
     backgroundColor: '#fff',
@@ -85,16 +86,17 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   addToCart: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 5,
-    width: "35%", 
-    backgroundColor:"#275C50",
+    position: 'absolute', // Utilisation d'une position absolue
+    top: 5, // Ajustez ces valeurs pour positionner "addToCart"
+    right: 5,
+    backgroundColor: '#275C50',
     borderRadius: 50,
-
+    flexDirection: 'col',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    width:55
   },
   button: {
     paddingHorizontal: 12,

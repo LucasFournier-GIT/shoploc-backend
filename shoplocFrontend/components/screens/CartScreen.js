@@ -50,7 +50,6 @@ const CartScreen = ({ navigation }) => {
         <Button title="Valider tout" onPress={handleValidateAll} color={"#275C50"} />
       </View>
 
-
       <CustomNavBar navigation={navigation} />
     </View>
   );
