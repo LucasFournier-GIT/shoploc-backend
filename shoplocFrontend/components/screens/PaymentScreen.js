@@ -82,7 +82,8 @@ const PaymentScreen = ({ navigation, TotalAmount }) => {
             </View>
         </View>
       </Modal>
-      <CustomNavBar navigation={navigation} />
+      <CustomNavBar navigation={navigation} screen="CartScreen" />
+
     </View>
   );
 };

@@ -55,7 +55,7 @@ const ShopScreen = ({ route, navigation }) => {
           />
         ))}
       </ScrollView>
-      <CustomNavBar navigation={navigation} />
+      <CustomNavBar navigation={navigation} screen="HomeScreen" />
     </View>
   );
 };

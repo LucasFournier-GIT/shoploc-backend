@@ -25,16 +25,19 @@ const ProductCard = ({ navigation, name, id, quantity, description, imageUrl }) 
 
       {quantity > 0 && (
         <View style={styles.addToCart}>
+          <TouchableOpacity onPress={handleAddToCart} style={[styles.button, styles.roundButton]}>
+            <Text style={styles.buttonText}>+</Text>
+          </TouchableOpacity>
+          
+          <Text style={[styles.cartQuantity, cartQuantity === 0 && { display: 'none' }]}>{cartQuantity}</Text>
+          
           <TouchableOpacity
             onPress={handleRemoveFromCart}
             style={[styles.button, cartQuantity === 0 && { display: 'none' }, styles.roundButton]}
           >
-            <Text style={styles.buttonText}>-</Text>
+          <Text style={styles.buttonText}>-</Text>
           </TouchableOpacity>
-          <Text style={[styles.cartQuantity, cartQuantity === 0 && { display: 'none' }]}>{cartQuantity}</Text>
-          <TouchableOpacity onPress={handleAddToCart} style={[styles.button, styles.roundButton]}>
-            <Text style={styles.buttonText}>+</Text>
-          </TouchableOpacity>
+
         </View>
       )}
     </View>

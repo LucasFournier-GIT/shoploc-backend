@@ -2,21 +2,58 @@ import { Text } from "react-native";
 import { StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native";
 import { View } from "react-native";
+import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons'; 
+import { Entypo } from '@expo/vector-icons'; 
+import { useState } from "react";
+import { MaterialIcons } from '@expo/vector-icons'; 
+import { Feather } from '@expo/vector-icons'; 
 
-const CustomNavBar = ({navigation}) => {
+const CustomNavBar = ({navigation, screen}) => {
+
+
+    const handleGoHomeScreen = () => {
+        navigation.navigate('HomeScreen');
+    }
+    
+    const handleGoLoginScreen = () => {
+        navigation.navigate('LoginScreen')
+    }
+    
+    const handleGoCartScreen = () => {
+        navigation.navigate('CartScreen')
+    }
+    
+    const handleProfileScreen = () => {
+        navigation.navigate('ProfileScreen')
+    }
+
     return(
         <View style={styles.navBar}>
-            <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
-                <Text style={styles.navText}>Home</Text>
+            <TouchableOpacity onPress={handleGoHomeScreen}>
+                <Ionicons 
+                name={screen === 'HomeScreen' ? "home" : "home-outline"}
+                size={screen === 'HomeScreen' ? 34 : 24} 
+                color="white" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
-                <Text style={styles.navText}>Traj</Text>
+            <TouchableOpacity onPress={handleGoLoginScreen}>
+                {screen === 'MapScreen' ? (
+                    <MaterialIcons name="location-pin" size={34} color="white" />
+                ) : (
+                    <Feather name="map-pin" size={24} color="white" />
+                )}
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('CartScreen')}>
-                <Text style={styles.navText}>Pani</Text>
+            <TouchableOpacity onPress={handleGoCartScreen}>
+                <Ionicons
+                    name={screen === "CartScreen" ? "basket" : "basket-outline"}
+                    size={screen === "CartScreen" ? 34 : 24}
+                    color="white" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
-                <Text style={styles.navText}>Prof</Text>
+            <TouchableOpacity onPress={handleProfileScreen}>
+                <Ionicons
+                    name={screen === "LoginScreen" ? "person" : "person-outline"}
+                    size={screen === "LoginScreen" ? 34 : 24}
+                    color="white" />
             </TouchableOpacity>
         </View>
     )

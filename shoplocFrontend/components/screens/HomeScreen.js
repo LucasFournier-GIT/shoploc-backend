@@ -77,7 +77,8 @@ const HomeScreen = ({ navigation }) => {
                 />
                 ))}
             </ScrollView>
-            <CustomNavBar navigation={navigation} />
+            <CustomNavBar navigation={navigation} screen="HomeScreen" />
+
         </View>
     );
 }

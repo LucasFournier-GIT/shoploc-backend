@@ -28,7 +28,7 @@ import CustomNavBar from "../CustomNavBar";
             <CustomButton text={"Payer ce panier"} onPress={handleValidate}></CustomButton>
           </View>
         </View>
-        <CustomNavBar navigation={navigation}></CustomNavBar>
+        <CustomNavBar navigation={navigation} screen="CartScreen" />
       </View>
 
     );
