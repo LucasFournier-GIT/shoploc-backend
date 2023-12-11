@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import CustomNavBar from '../CustomNavBar';
 import CustomInput from '../CustomInput';
 import CustomButton from '../CustomButton';
@@ -7,6 +7,7 @@ import CustomButton from '../CustomButton';
 const PaymentScreen = ({ navigation, TotalAmount }) => {
   const [paymentOption, setPaymentOption] = useState(TotalAmount);
   const [number, setNumber] = useState(0);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleOptionSelection = (option) => {
     setPaymentOption(option);
@@ -19,6 +20,8 @@ const PaymentScreen = ({ navigation, TotalAmount }) => {
   const handleValidate = () => {
     //confirmer le paiement
     //Retirer les éléments du panier
+    setIsModalVisible(true);
+
   }
 
   return (
@@ -65,6 +68,20 @@ const PaymentScreen = ({ navigation, TotalAmount }) => {
 
 
       </View>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={() => setIsModalVisible(false)}
+        >
+        <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+            <Text style={styles.modalText}>Le paiement a bien été effectué</Text>
+            
+            <CustomButton text={"Fermer"} onPress={() => setIsModalVisible(false)}/>
+            </View>
+        </View>
+      </Modal>
       <CustomNavBar navigation={navigation} />
     </View>
   );
@@ -93,6 +110,35 @@ const styles = StyleSheet.create({
     padding: 20,
     elevation: 5,
     margin:10,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fond semi-transparent pour recouvrir l'écran
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 20,
+    alignItems: 'center',
+    elevation: 5, // Ombre
+  },
+  modalText: {
+    fontSize: 18,
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  modalButton: {
+    backgroundColor: '#3498db',
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 10,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    textAlign: 'center',
   },
 });
 
