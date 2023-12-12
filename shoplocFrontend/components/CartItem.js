@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import colors from "./../assets/colors";
 
 const CartItem = ({ product, handleIncrease, handleDecrease }) => {
   return (
@@ -25,10 +26,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    borderBottomColor: colors.tertiary,
     paddingVertical: 10,
     paddingHorizontal: 5,
-    backgroundColor: "#ECE5E3",
+    backgroundColor: colors.background,
     marginBottom: 2,
   },
   productName: {
@@ -37,25 +38,25 @@ const styles = StyleSheet.create({
   quantityContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: "#275C50",
+    backgroundColor: colors.secondary,
     borderRadius: 32.5,
     elevation: 5,
   },
   quantityText: {
     marginHorizontal: 10,
     fontSize: 16,
-    color: "#fff"
+    color: "white"
   },
   button: {
-    backgroundColor: "#275C50",
+    backgroundColor: colors.secondary,
     padding: 5,
     borderRadius: 32.5,
-    elevation: 5,
+    elevation: 10,
     width: 30,
     alignItems: 'center',
   },
   buttonText: {
-    color: "#fff"
+    color: "white"
   }
 });
 

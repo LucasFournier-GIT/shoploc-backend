@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Button, StyleSheet, ScrollView, ScrollViewBase } from 'react-native';
 import ShopCartSummary from './../ShopCartSummary';
 import CustomNavBar from '../CustomNavBar';
+import colors from "./../../assets/colors";
 
 const CartScreen = ({ navigation }) => {
     const storeCarts = [
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       top: 0,
-      backgroundColor: "#EFEFEF",
+      backgroundColor: colors.background,
       
     },
     content: {
@@ -78,11 +79,11 @@ const styles = StyleSheet.create({
       fontSize: 30,
       fontWeight: 'bold',
       marginTop: 5,
-      color: '#5D3528',
+      color: colors.primary,
       alignSelf: 'center',
     },
     card: {
-      backgroundColor: "#fff",
+      backgroundColor: "white",
       borderRadius: 32.5,
       margin: 10,
       marginBottom:135,

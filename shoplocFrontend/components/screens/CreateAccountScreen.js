@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import CustomInput from '../CustomInput';
 import CustomButton from '../CustomButton';
 import { useState } from 'react';
+import colors from "./../../assets/colors";
 
 const CreateAccountScreen = ({navigation}) => {
     
@@ -63,18 +64,18 @@ const styles = StyleSheet.create({
       flex: 1,
       //justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: "#5D3528",
+      backgroundColor: colors.primary,
     },
     heading: {
       fontSize: 30,
       fontWeight: 'bold',
       marginBottom: 20,
       marginTop: 20,
-      color: '#EFEFEF',
+      color: colors.background,
       //fontFamily: 'LilyScriptOne-Regular',
     },
     heading2: {
-      color:'#5D3528',
+      color: colors.primary,
       //fontFamily: 'LilyScriptOne-Regular',
       fontSize: 20,
       marginBottom: 15
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
     content:{
       flex: 1,
       width:'100%',
-      backgroundColor: '#EFEFEF',
+      backgroundColor: colors.background,
       borderTopLeftRadius: 50,
       borderTopRightRadius: 50,
       padding:'10%',
@@ -90,17 +91,17 @@ const styles = StyleSheet.create({
     },
     createAccountText: {
       marginTop: 10,
-      color: '#5D3528',
+      color: colors.primary,
       fontSize: 15,
       alignSelf: 'flex-end', 
     },
     createAccountLink: {
       fontWeight: 'bold',
-      color:"#275C50",
+      color: colors.secondary,
   
     },
     footer :{
-      color:"#5D3528",
+      color: colors.primary,
       position:'absolute',
       bottom:10,
       alignSelf:'center'

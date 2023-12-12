@@ -1,8 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
 import CustomSearchBar from './../CustomSearchBar';
 import CustomNavBar from './../CustomNavBar';
 import ProductCard from './../ProductCard';
+import logo from './../../assets/logo.png';
+import { Octicons } from '@expo/vector-icons'; 
+import colors from "./../../assets/colors";
 
 // Liste fictive de produits
 const dummyProducts = [
@@ -38,10 +41,28 @@ const dummyProducts = [
 
 const ShopScreen = ({ route, navigation }) => {
   const { shopId } = route.params;
+
   return (
     <View style={styles.container}>
-      <Text style={styles.heading2}>Nom du shop n°{shopId}</Text>
-      <CustomSearchBar />
+      {/* Première ligne */}
+      <View style={styles.header}>
+        <View style={styles.headerLeft}>
+          <Image source={logo} style={styles.logo} />
+        </View>
+        <View style={styles.headerMiddle}>
+          <Text style={styles.heading2}>Magasin °{shopId}</Text>
+        </View>
+        <TouchableOpacity style={styles.headerRight}>
+          <Octicons name="info" size={24} color={colors.primary} />
+        </TouchableOpacity>
+      </View>
+
+      {/* Deuxième ligne */}
+      <View style={styles.searchBarContainer}>
+        <CustomSearchBar />
+      </View>
+
+      {/* Contenu de la liste de produits */}
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         {dummyProducts.map((product) => (
           <ProductCard
@@ -55,6 +76,8 @@ const ShopScreen = ({ route, navigation }) => {
           />
         ))}
       </ScrollView>
+
+      {/* Barre de navigation en bas */}
       <CustomNavBar navigation={navigation} screen="HomeScreen" />
     </View>
   );
@@ -63,8 +86,39 @@ const ShopScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#EFEFEF",
+    backgroundColor: colors.backgroundColor,
     height: "100%"
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 15,
+    paddingTop: 10,
+    paddingBottom: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.primary,
+  },
+  headerLeft: {
+    flex: 1,
+  },
+  headerMiddle: {
+    flex: 3,
+    alignItems:"center"
+  },
+  headerRight: {
+    flex: 1,
+    alignItems: 'flex-end',
+    marginRight:10,
+  },
+  logo: {
+    width: 50,
+    height: 50,
+  },
+  heading2: {
+    color: colors.primary,
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   scrollViewContent: {
     flexDirection: 'row',
@@ -74,11 +128,11 @@ const styles = StyleSheet.create({
     paddingBottom: "25%",
     marginTop: 10,
   },
-  heading2: {
-    color:'#5D3528',
-    fontSize: 26,
-    alignSelf:'center'
+  searchBarContainer: {
+    paddingHorizontal: 10,
+    height:"9%"
   },
 });
+
 
 export default ShopScreen;

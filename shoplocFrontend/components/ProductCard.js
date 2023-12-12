@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import colors  from './../assets/colors';
 
 const ProductCard = ({ navigation, name, id, quantity, description, imageUrl }) => {
   const [cartQuantity, setCartQuantity] = useState(0);
@@ -18,7 +19,7 @@ const ProductCard = ({ navigation, name, id, quantity, description, imageUrl }) 
     <View style={styles.card}>
         <Image source={{ uri: imageUrl }} style={styles.image} />
         <Text style={styles.name}>{name}</Text>
-        <Text style={[styles.quantity, { color: quantity === 0 ? '#e74c3c' : '#2ecc71' }]}>
+        <Text style={[styles.quantity, { color: quantity === 0 ? colors.error : colors.valid }]}>
           {quantity === 0 ? 'Rupture de stock' : `En stock: ${quantity}`}
         </Text>
         <Text style={styles.description}>{description}</Text>
@@ -47,9 +48,8 @@ const ProductCard = ({ navigation, name, id, quantity, description, imageUrl }) 
 const styles = StyleSheet.create({
   card: {
     position: 'relative',
-    borderColor: '#ccc',
     borderRadius: 32.5,
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     elevation: 5,
     margin: 5,
     width: '47%',
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 15,
     fontStyle: 'italic',
-    color: '#555',
+    color: colors.primary,
     textAlign: 'center',
     paddingLeft: 5,
     paddingRight: 5,
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     position: 'absolute', // Utilisation d'une position absolue
     top: 5, // Ajustez ces valeurs pour positionner "addToCart"
     right: 5,
-    backgroundColor: '#275C50',
+    backgroundColor: colors.secondary,
     borderRadius: 50,
     flexDirection: 'col',
     alignItems: 'center',
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   button: {
     paddingHorizontal: 12,
     paddingVertical: 8,
-    backgroundColor: '#2ecc71',
+    backgroundColor: colors.secondary,
     borderRadius: 5,
     marginHorizontal: 5,
     width:"100%",
@@ -110,17 +110,17 @@ const styles = StyleSheet.create({
   },
   roundButton: {
     borderRadius: 50,
-    backgroundColor: '#275C50',
+    backgroundColor: colors.secondary,
     elevation:10
   },
   buttonText: {
-    color: '#FFFFFF',
+    color: 'white',
   },
   cartQuantity: {
     fontSize: 16,
     fontWeight: 'bold',
     marginHorizontal: 8,
-    color:"#ffffff"
+    color:"white"
   },
 });
 

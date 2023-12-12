@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import CustomNavBar from '../CustomNavBar';
 import CustomInput from '../CustomInput';
 import CustomButton from '../CustomButton';
+import logo from './../../assets/logo.png';
+import colors from "./../../assets/colors";
 
 const PaymentScreen = ({ navigation, TotalAmount }) => {
   const [paymentOption, setPaymentOption] = useState(TotalAmount);
@@ -27,6 +29,7 @@ const PaymentScreen = ({ navigation, TotalAmount }) => {
   return (
     <View style={styles.container}>
       <View style={styles.card}>
+
         <View style={styles.option}>
             <TouchableOpacity style={styles.optionHead} onPress={() => handleOptionSelection('magasin')}>
             <Text style={styles.optionText}>Payer en magasin</Text>
@@ -98,7 +101,7 @@ const styles = StyleSheet.create({
     marginBottom:5,
   },
   option:{
-    backgroundColor: '#ECE5E3',
+    backgroundColor: colors.background ,
     margin: 5,
     padding: 10,
   },
@@ -106,7 +109,7 @@ const styles = StyleSheet.create({
     fontSize:17
   },
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     borderRadius: 32.5,
     padding: 20,
     elevation: 5,
@@ -119,7 +122,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fond semi-transparent pour recouvrir l'écran
   },
   modalContent: {
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     borderRadius: 10,
     padding: 20,
     alignItems: 'center',
@@ -131,16 +134,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   modalButton: {
-    backgroundColor: '#3498db',
     padding: 10,
     borderRadius: 5,
     marginTop: 10,
   },
   buttonText: {
-    color: '#fff',
+    color: 'white',
     fontSize: 16,
     textAlign: 'center',
   },
+
 });
 
 export default PaymentScreen;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import colors from "./../assets/colors";
 
 const ShopCard = ({ navigation, name, id, status, hours, imageUrl }) => {
 
@@ -15,7 +16,7 @@ const ShopCard = ({ navigation, name, id, status, hours, imageUrl }) => {
     <TouchableOpacity style={styles.container} onPress={handleShopPress}>
       <Image source={{ uri: imageUrl }} style={styles.image} />
       <Text style={styles.name}>{name}</Text>
-      <Text style={[styles.status, { color: status ? '#2ecc71' : '#e74c3c' }]}>
+      <Text style={[styles.status, { color: status ? colors.valid : colors.error }]}>
         {status ? 'Ouvert' : 'Fermé'}
       </Text>
       <Text style={styles.hours}>{hours}</Text>
@@ -32,9 +33,8 @@ const styles = StyleSheet.create({
     padding:0
   },
   card: {
-    borderColor: '#ccc',
     borderRadius: 32.5,
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     elevation: 5,
     margin:5,
     width: '47%', 
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   hours: {
     fontSize: 17,
     fontStyle: 'italic',
-    color: '#555',
+    color: colors.primary,
     textAlign: 'center', // Centrage du texte
     paddingLeft:5,
     paddingRight:5,

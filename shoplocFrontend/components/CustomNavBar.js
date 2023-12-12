@@ -8,6 +8,7 @@ import { Entypo } from '@expo/vector-icons';
 import { useState } from "react";
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { Feather } from '@expo/vector-icons'; 
+import colors from "./../assets/colors";
 
 const CustomNavBar = ({navigation, screen}) => {
 
@@ -30,26 +31,42 @@ const CustomNavBar = ({navigation, screen}) => {
 
     return(
         <View style={styles.navBar}>
-            <TouchableOpacity onPress={handleGoHomeScreen}>
+            <TouchableOpacity
+                onPress={handleGoHomeScreen}
+                style={screen === 'HomeScreen' ? styles.active : ""}
+                >
                 <Ionicons 
+                style={styles.icon}
                 name={screen === 'HomeScreen' ? "home" : "home-outline"}
                 size={screen === 'HomeScreen' ? 34 : 24} 
                 color="white" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleGoLoginScreen}>
+            <TouchableOpacity 
+                disabled={true}
+                onPress={handleGoLoginScreen}
+                style={screen === 'LoginScreen' ? styles.active : ""}
+                >
                 {screen === 'MapScreen' ? (
                     <MaterialIcons name="location-pin" size={34} color="white" />
                 ) : (
                     <Feather name="map-pin" size={24} color="white" />
                 )}
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleGoCartScreen}>
+            <TouchableOpacity 
+                onPress={handleGoCartScreen}
+                style={screen === 'CartScreen' ? styles.active : ""}
+                >
                 <Ionicons
                     name={screen === "CartScreen" ? "basket" : "basket-outline"}
                     size={screen === "CartScreen" ? 34 : 24}
                     color="white" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleProfileScreen}>
+            <TouchableOpacity 
+                disabled={true}
+
+                onPress={handleProfileScreen}
+                style={screen === 'ProfileScreen' ? styles.active : ""}
+                >
                 <Ionicons
                     name={screen === "LoginScreen" ? "person" : "person-outline"}
                     size={screen === "LoginScreen" ? 34 : 24}
@@ -71,7 +88,7 @@ const styles = StyleSheet.create({
       height:"10%",
       width:"90%",
       alignItems: 'center', // Pour centrer verticalement les éléments
-      backgroundColor: '#5D3528',
+      backgroundColor: colors.primary,
       alignSelf:'center',
       borderRadius:32.5,
       //paddingVertical: 10,
@@ -82,12 +99,27 @@ const styles = StyleSheet.create({
       //right: 0,
     },
     navText: {
-      color: '#FFFFFF',
+      color: 'white',
       fontSize: 16,
       fontWeight: 'bold',
     },
     tabBar:{
   
+    },
+    active:{
+        backgroundColor: colors.primary,
+        padding:15,
+        borderRadius:50,
+        height:70,
+        width:80,
+        alignItems:"center",
+        marginBottom:25
+    },
+    icon:{
+
+    },
+    hidden:{
+        display:"none",
     }
   });
   

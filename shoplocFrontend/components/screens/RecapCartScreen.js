@@ -3,6 +3,7 @@ import { View } from "react-native-animatable";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import CustomButton from "../CustomButton";
 import CustomNavBar from "../CustomNavBar";
+import colors from './../../assets/colors';
 
 
 // Calcul de la somme totale des produits (price * quantity)
@@ -40,7 +41,7 @@ import CustomNavBar from "../CustomNavBar";
       alignItems: "center",
     },
     card: {
-      backgroundColor: "#fff",
+      backgroundColor: "white",
       borderRadius: 32.5,
       padding: 20,
       elevation: 5,
@@ -48,7 +49,7 @@ import CustomNavBar from "../CustomNavBar";
     },
     amount: {
       fontWeight: "bold",
-      color: "#275C50",
+      color: colors.secondary,
     },
     text: {
       textAlign: "center",

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
+import colors from "./../assets/colors";
 
 const CustomInput = ({ type, label, placeholder, onChange }) => {
   const [inputValue, setInputValue] = useState('');
@@ -17,7 +18,6 @@ const CustomInput = ({ type, label, placeholder, onChange }) => {
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          placeholderTextColor="#999999"
           secureTextEntry={type === 'password'}
           keyboardType={type === 'email-address' ? 'email-address' : 'default'}
           onChangeText={handleInputChange}
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   label: {
     marginBottom: 5,
     fontSize: 17,
-    color: '#5D3528'
+    color: colors.primary
   },
   inputContainer: {
     position: 'relative',
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 2,
-    borderColor: '#5D3528',
+    borderColor: colors.primary,
     borderRadius: 32.5,
     padding: 10,
     fontSize: 15,
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     top: 13,
     fontStyle: 'italic',
     fontSize: 15,
-    color: '#B18F84',
+    color: colors.light,
   },
 });
 

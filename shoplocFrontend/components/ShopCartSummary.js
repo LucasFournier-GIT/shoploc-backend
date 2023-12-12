@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import CartItem from './CartItem';
+import colors from "./../assets/colors";
 
 const ShopCartSummary = ({ store, navigation }) => {
   const removeFromCart = (productIdToRemove) => {
@@ -66,7 +67,7 @@ const handleValidate = () => {
 
 const styles = StyleSheet.create({
   heading2: {
-    color: '#5D3528',
+    color: colors.primary,
     fontSize: 20,
     marginBottom: 15
   },
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
     // Styles pour le conteneur global du composant ShopCartSummary
   },
   button: {
-    backgroundColor: "#275C50",
+    backgroundColor: colors.secondary,
     padding: 5,
     borderRadius: 32.5,
     elevation: 5,
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonText: {
-    color: "#fff",
+    color: "white",
     marginVertical: 5,
     marginHorizontal: 10
   }

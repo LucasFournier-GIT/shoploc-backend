@@ -1,15 +1,15 @@
 import { View, TextInput, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import colors from "./../assets/colors";
 const SearchBar = () => {
     return (
         <View style={styles.searchContainer}>
             <TextInput
                 placeholder="Chercher un produit..."
-                placeholderTextColor="#B18F84"
+                placeholderTextColor={colors.light}
                 style={styles.input}
             />
-            <Icon name="search" size={24} color="#5D3528" style={styles.icon} />
+            <Icon name="search" size={24} color={colors.secondary} style={styles.icon} />
         </View>
     );
 };
@@ -19,20 +19,23 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         borderWidth: 1.5,
-        borderColor: '#5D3528',
+        borderColor: colors.primary,
         borderRadius: 32.5,
         paddingHorizontal: 10,
         marginHorizontal: 20,
-        marginTop: 20,
-        marginBottom:10,
-        backgroundColor:"#fff",
-        height : 43
+        marginTop: 15,
+        marginBottom:0,
+        backgroundColor:"white",
+        flex:1,
+        height : 43,
+        
     },
     input: {
         flex: 1,
-        color: '#5D3528',
+        color: colors.primary,
         fontStyle: 'italic',
         paddingLeft: 10,
+        height:75,
     },
     icon: {
         marginRight: 5,

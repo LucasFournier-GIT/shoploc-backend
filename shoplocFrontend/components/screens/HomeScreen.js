@@ -1,4 +1,4 @@
-import { StatusBar, View } from "react-native";
+import { Image, StatusBar, View } from "react-native";
 import CustomNavBar from "./../CustomNavBar";
 import CustomSearchBar from "./../CustomSearchBar"
 import { StyleSheet } from "react-native";
@@ -6,6 +6,8 @@ import { Text } from "react-native";
 import { SearchBar } from 'react-native-elements';
 import { ScrollView } from "react-native";
 import ShopCard from "../ShopCard";
+import logo from "./../../assets/logo.png";
+import colors from "./../../assets/colors";
 
 const dummyShops = [
     {
@@ -58,11 +60,15 @@ const HomeScreen = ({ navigation }) => {
 
     return (
         <View style={styles.View}>
+          
             <StatusBar
                 animated={true}
-                backgroundColor="#5D3528"
+                backgroundColor={colors.primary}
             />
-            <CustomSearchBar></CustomSearchBar>
+            <View style={styles.head} >
+              <Image source={logo} style={styles.logo} />
+              <CustomSearchBar></CustomSearchBar>
+            </View>
             <ScrollView contentContainerStyle={styles.scrollViewContent}>
                 {dummyShops.map((shop) => (
                 
@@ -86,37 +92,37 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     View: {
         flex: 1,
-        backgroundColor: "#EFEFEF",
+        backgroundColor: "colors.background",
         height: "100%"
     },
     searchBarContainer: {
-        backgroundColor: '#EFEFEF',
+        backgroundColor: colors.background,
         borderWidth: 1.5,
-        borderColor: '#5D3528',
+        borderColor: colors.primary,
         borderTopWidth: 0,
         borderBottomWidth: 0,
         paddingHorizontal: 10,
-        height:"150%"
-    },
-    searchBarInputContainer: {
-        backgroundColor: "#FFFFFF",
-        borderWidth: 1.5,
-        borderColor: '#5D3528',
-    },
-    searchBarInput: {
-        color: "#5D3528",
-        fontStyle: 'italic',
+        height:"150%",
+        flexDirection:"row",
+        flex:1,
     },
     scrollViewContent: {
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'space-evenly',
-        paddingHorizontal: 5, // Pas d'espace à gauche et à droite
+        paddingHorizontal: 5, 
         paddingBottom: "25%", 
-        // Ajoutez un style pour ajuster l'espace entre les cartes
-        marginTop: 10, // Espace en haut de la liste de cartes
-        backgroundColor:"#EFEFEF"
+        backgroundColor: colors.background,
       },
+    logo:{
+      width: 50,
+      height: 50,
+      margin:15,
+      marginRight:0
+    },
+    head: {
+      flexDirection:"row"
+    }
 });
 
 export default HomeScreen;
