@@ -1,9 +1,8 @@
 package fr.shoploc.shoplocBackend.shop.controller;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import fr.shoploc.shoplocBackend.shop.model.Shop;
+import fr.shoploc.shoplocBackend.common.models.Shop;
 import fr.shoploc.shoplocBackend.shop.service.ShopService;
 
 import java.util.List;

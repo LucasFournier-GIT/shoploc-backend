@@ -3,7 +3,7 @@ package fr.shoploc.shoplocBackend.shop.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "shops")
+@Table(name = "shop")
 public class Shop {
 
     @Id
