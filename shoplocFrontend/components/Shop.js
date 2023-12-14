@@ -1,12 +1,13 @@
 import { View } from "react-native/types";
+import colors from "./../assets/colors";
 
 export default function Shop() {
     return (
         <View>
             <StatusBar
                 animated={true}
-                backgroundColor="#5D3528"
+                backgroundColor={colors.primary}
             />
         </View>
     );
-}
+}   

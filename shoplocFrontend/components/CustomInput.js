@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
+import colors from "./../assets/colors";
 
-const CustomInput = ({ type, label, placeholder }) => {
-  const [inputValue, setInputValue] = useState(''); // Utilisation de "inputValue" au lieu de "text"
+const CustomInput = ({ type, label, placeholder, onChange }) => {
+  const [inputValue, setInputValue] = useState('');
+
+  const handleInputChange = (value) => {
+    setInputValue(value);
+    if (onChange) {
+      onChange(value);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -10,11 +18,9 @@ const CustomInput = ({ type, label, placeholder }) => {
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          placeholderTextColor="#999999"
-          value={inputValue} // Utilisation de "inputValue" ici
-          onChangeText={(value) => setInputValue(value)} // Mise à jour de "inputValue"
           secureTextEntry={type === 'password'}
-          keyboardType={type === 'email' ? 'email-address' : 'default'}
+          keyboardType={type === 'email-address' ? 'email-address' : 'default'}
+          onChangeText={handleInputChange}
         />
         {inputValue === '' && (
           <Text style={styles.placeholder}>{placeholder}</Text>
@@ -31,18 +37,20 @@ const styles = StyleSheet.create({
   label: {
     marginBottom: 5,
     fontSize: 17,
-    color: '#5D3528'
+    color: colors.primary
   },
   inputContainer: {
     position: 'relative',
     width: '100%',
+    
   },
   input: {
     borderWidth: 2,
-    borderColor: '#5D3528',
+    borderColor: colors.primary,
     borderRadius: 32.5,
     padding: 10,
     fontSize: 15,
+    backgroundColor:"white"
   },
   placeholder: {
     position: 'absolute',
@@ -50,7 +58,7 @@ const styles = StyleSheet.create({
     top: 13,
     fontStyle: 'italic',
     fontSize: 15,
-    color: '#B18F84',
+    color: colors.light,
   },
 });
 
