@@ -33,6 +33,5 @@ public class ProductController {
         List<Product> products = productService.getAllProductsByShopId(shopId);
         return products;
     }
-
-
+    
 }
