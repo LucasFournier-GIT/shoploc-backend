@@ -8,8 +8,9 @@ import { ScrollView } from "react-native";
 import ShopCard from "../ShopCard";
 import logo from "./../../assets/logo.png";
 import colors from "./../../assets/colors";
+import { useEffect, useState } from "react";
 
-const dummyShops = [
+/*const dummyShops = [
     {
       id: 1,
       name: 'Auchan',
@@ -52,11 +53,35 @@ const dummyShops = [
         hours: '9h00 - 20h00',
         imageUrl: 'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       },
-  ];
+  ];*/
   
   
 
 const HomeScreen = ({ navigation }) => {
+
+    const [shops, setShops] = useState([]);
+
+    useEffect(() => {
+      // Fonction pour récupérer les données des magasins depuis votre API
+      const fetchShops = async () => {
+          try {
+              const response = await fetch('http://localhost:8080/api/shop');
+              if (response.ok) {
+                  const data = await response.json();
+                  console.log(data);
+                  console.log("HELLLOOOO");
+                  setShops(data); // Met à jour l'état avec les données des magasins récupérées
+              } else {
+                  console.error('1 - Erreur lors de la récupération des magasins:', response.status);
+              }
+          } catch (error) {
+              console.error('2 - Erreur lors de la récupération des magasins:', error);
+          }
+      };
+
+      fetchShops(); // Appel de la fonction pour récupérer les magasins au chargement du composant
+    }, []); // Utilisation d'un tableau vide pour n'exécuter useEffect qu'une seule fois après le rendu initial
+
 
     return (
         <View style={styles.View}>
@@ -70,7 +95,7 @@ const HomeScreen = ({ navigation }) => {
               <CustomSearchBar></CustomSearchBar>
             </View>
             <ScrollView contentContainerStyle={styles.scrollViewContent}>
-                {dummyShops.map((shop) => (
+                {shops.map((shop) => (
                 
                 <ShopCard
                     key={shop.id}

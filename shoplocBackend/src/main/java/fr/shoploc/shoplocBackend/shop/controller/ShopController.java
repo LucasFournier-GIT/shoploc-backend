@@ -1,5 +1,6 @@
 package fr.shoploc.shoplocBackend.shop.controller;
 
+import jakarta.annotation.security.PermitAll;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -7,9 +8,11 @@ import fr.shoploc.shoplocBackend.shop.model.Shop;
 import fr.shoploc.shoplocBackend.shop.service.ShopService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/shops")
+@PermitAll
+@RequestMapping("/api/shop")
 public class ShopController {
     private final ShopService shopService;
 
@@ -32,14 +35,16 @@ public class ShopController {
 
     // Endpoint pour avoir un magasin depuis son id
     @GetMapping("/{id}")
-    public Shop getShopById(@PathVariable Long id) {
-        Shop shop = shopService.getShopById(id);
+    public Optional<Shop> getShopById(@PathVariable Long id) {
+        Optional<Shop> shop = shopService.getShopById(id);
         return shop;
     }
 
     // Endpoint pour avoir la liste de tous les magasins
     @GetMapping
+    @PermitAll
     public List<Shop> getAllShops() {
+        System.out.println("PING GETALL");
         List<Shop> shops = shopService.getAllShops();
         return shops;
     }
