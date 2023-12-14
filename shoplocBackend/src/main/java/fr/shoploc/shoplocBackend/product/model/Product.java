@@ -17,9 +17,9 @@ public class Product {
     private String nom;
     private String description;
     private double prix;
-    private int disponibilite_en_stock;
-    private String lien_image_produit;
-    private Long id_magasin;
-    private Long id_categorie;
+    private int disponibilite;
+    private String image;
+    private Long idMagasin;
+    private Long idCategorie;
 
 }
