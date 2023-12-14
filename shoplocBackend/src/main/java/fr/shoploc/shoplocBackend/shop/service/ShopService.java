@@ -4,7 +4,7 @@ import fr.shoploc.shoplocBackend.shop.repository.ShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import fr.shoploc.shoplocBackend.shop.model.Shop;
+import fr.shoploc.shoplocBackend.common.models.Shop;
 
 import java.util.List;
 
