@@ -5,7 +5,7 @@ import { useState } from 'react';
 import colors from "./../../assets/colors";
 
 const CreateAccountScreen = ({navigation}) => {
-    
+
   const [nom, setNom] = useState('');
   const [prenom, setPrenom] = useState('');
   const [mail, setMail] = useState('');
@@ -30,32 +30,24 @@ const CreateAccountScreen = ({navigation}) => {
       console.log(immatriculation);
     }
 
-    //TODO enregistrer le compte dans la Base
-
-    navigation.navigate("HomeScreen");
-  }
-
-  return (
-      <View style={styles.container}>
-      <Text style={styles.heading}>Bienvenue</Text>
-      <View style={styles.content}>
-      <ScrollView>
-        <Text style={styles.heading2}>Inscription</Text>
-        <CustomInput type={"text"} label={"Votre nom"} placeholder={"Votre nom"} onChange={handleChangeNom} />
-        <CustomInput type={"text"} label={"Votre prénom"} placeholder={"Votre prénom"} onChange={handleChangePrenom} />
-        <CustomInput type={"email-address"} label={"Votre adresse email"} placeholder={"Votre adresse email"} onChange={handleChangeMail} />
-        <CustomInput type={"text"} label={"Votre immatrirculation (facultative)"} placeholder={"Votre numéro d'immatriculation"} onChange={handleChangeImmatriculation}/>
-        <CustomInput type={"password"} label={"Votre mot de passe"} placeholder={"Votre mot de passe"} onChange={handleChangeMdp}/>
-        <CustomInput type={"password"} label={"Confirmation - Votre mot de passe"} placeholder={"Votre mot de passe"} onChange={handleChangeConfMdp}/>
-        </ScrollView>
-        <CustomButton text={"Créer un compte"} onPress={handleCreateAccount}/>
-        
-        <Text style={styles.footer}>
-            ShopLoc by SEQI
-        </Text>
+const CreateAccountScreen = () => {
+    return (
+        <View style={styles.container}>
+        <Text style={styles.heading}>Bienvenue</Text>
+        <View style={styles.content}>
+          <Text style={styles.heading2}>Inscription</Text>
+          <CustomInput type={"text"} label={"Votre nom"} placeholder={"Votre nom"}/>
+          <CustomInput type={"email-address"} label={"Votre adresse email"} placeholder={"Votre adresse email"}/>
+          <CustomInput type={"text"} label={"Votre immatrirculation (facultative)"} placeholder={"Votre numéro d'immatriculation"}/>
+          <CustomInput type={"password"} label={"Votre mot de passe"} placeholder={"Votre mot de passe"}/>
+          <CustomInput type={"password"} label={"Confirmation - Votre mot de passe"} placeholder={"Votre mot de passe"}/>
+          <CustomButton text={"Créer un compte"}/>
+          <Text style={styles.footer}>
+              ShopLoc by SEQI
+          </Text>
+        </View>
       </View>
-    </View>
-  )
+    )
 }
 
 
@@ -64,18 +56,18 @@ const styles = StyleSheet.create({
       flex: 1,
       //justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: colors.primary,
+      backgroundColor: "#5D3528",
     },
     heading: {
       fontSize: 30,
       fontWeight: 'bold',
       marginBottom: 20,
       marginTop: 20,
-      color: colors.background,
+      color: '#EFEFEF',
       //fontFamily: 'LilyScriptOne-Regular',
     },
     heading2: {
-      color: colors.primary,
+      color:'#5D3528',
       //fontFamily: 'LilyScriptOne-Regular',
       fontSize: 20,
       marginBottom: 15
@@ -83,7 +75,7 @@ const styles = StyleSheet.create({
     content:{
       flex: 1,
       width:'100%',
-      backgroundColor: colors.background,
+      backgroundColor: '#EFEFEF',
       borderTopLeftRadius: 50,
       borderTopRightRadius: 50,
       padding:'10%',
@@ -91,17 +83,17 @@ const styles = StyleSheet.create({
     },
     createAccountText: {
       marginTop: 10,
-      color: colors.primary,
+      color: '#5D3528',
       fontSize: 15,
       alignSelf: 'flex-end', 
     },
     createAccountLink: {
       fontWeight: 'bold',
-      color: colors.secondary,
+      color:"#275C50",
   
     },
     footer :{
-      color: colors.primary,
+      color:"#5D3528",
       position:'absolute',
       bottom:10,
       alignSelf:'center'
