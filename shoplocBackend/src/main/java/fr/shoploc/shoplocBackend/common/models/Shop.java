@@ -1,4 +1,4 @@
-package fr.shoploc.shoplocBackend.shop.model;
+package fr.shoploc.shoplocBackend.common.models;
 
 import jakarta.persistence.*;
 
