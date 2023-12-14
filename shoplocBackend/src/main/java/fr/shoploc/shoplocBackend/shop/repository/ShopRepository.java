@@ -1,6 +1,6 @@
 package fr.shoploc.shoplocBackend.shop.repository;
 
-import fr.shoploc.shoplocBackend.shop.model.Shop;
+import fr.shoploc.shoplocBackend.common.models.Shop;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
