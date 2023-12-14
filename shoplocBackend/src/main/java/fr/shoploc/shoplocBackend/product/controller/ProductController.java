@@ -1,6 +1,6 @@
 package fr.shoploc.shoplocBackend.product.controller;
 
-import fr.shoploc.shoplocBackend.product.model.Product;
+import fr.shoploc.shoplocBackend.common.models.Product;
 import fr.shoploc.shoplocBackend.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -33,5 +33,5 @@ public class ProductController {
         List<Product> products = productService.getAllProductsByShopId(shopId);
         return products;
     }
-    
+
 }

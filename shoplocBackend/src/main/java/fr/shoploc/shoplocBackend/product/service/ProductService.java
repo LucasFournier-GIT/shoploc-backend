@@ -1,6 +1,6 @@
 package fr.shoploc.shoplocBackend.product.service;
 
-import fr.shoploc.shoplocBackend.product.model.Product;
+import fr.shoploc.shoplocBackend.common.models.Product;
 import fr.shoploc.shoplocBackend.product.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
