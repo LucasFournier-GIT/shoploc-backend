@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
 import CustomSearchBar from './../CustomSearchBar';
 import CustomNavBar from './../CustomNavBar';
@@ -41,6 +41,22 @@ const dummyProducts = [
 
 const ShopScreen = ({ route, navigation }) => {
   const { shopId } = route.params;
+
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(`http://localhost/api/product/shop/${shopId}`);
+        setProducts(response.data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts();
+  }, [shopId]);
+
 
   return (
     <View style={styles.container}>

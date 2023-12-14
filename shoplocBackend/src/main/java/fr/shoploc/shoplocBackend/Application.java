@@ -1,7 +1,5 @@
 package fr.shoploc.shoplocBackend;
 
-import fr.shoploc.shoplocBackend.testproduct.model.Product;
-import fr.shoploc.shoplocBackend.testproduct.service.ProductService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
@@ -13,8 +11,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 public class Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args)
-                .getBean(ProductService.class)
-                .create(new Product("PC", "Incroyable AZUSSE", 10));
+        SpringApplication.run(Application.class, args);
+                //.getBean(ProductService.class)
+                //.create(new Product("PC", "Incroyable AZUSSE", 10));
     }
 }
