@@ -10,40 +10,34 @@ import logo from "./../../assets/logo.png";
 import colors from "./../../assets/colors";
 import { useEffect, useState } from "react";
 
-  const token = 'eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJjYW1pbGxlcm1wb2lyaWVyQGdtYWlsLmNvbSIsImlhdCI6MTcwMjY1MjIzOCwiZXhwIjoxNzAyNjUzNjc4fQ.jquyVK7G0xVR4HQvBQNxtYKA6v_c_g5v5P9RuQIxokUE8zi6kiMCa0nU13QJyjLc'; 
+  const token = 'eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJjYW1pbGxlcm1wb2lyaWVyQGdtYWlsLmNvbSIsImlhdCI6MTcwMjY1MjIzOCwiZXhwIjoxNzAyNjUzNjc4fQ.jquyVK7G0xVR4HQvBQNxtYKA6v_c_g5v5P9RuQIxokUE8zi6kiMCa0nU13QJyjLc';
 
   
 
 const HomeScreen = ({ navigation }) => {
 
-  const [shops, setShops] = useState([]);
+    const [shops, setShops] = useState([]);
 
-  useEffect(() => {
-    const fetchShopData = async () => {
-      try {
-        const response = await fetch('http://localhost:8080/api/shop', {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        });
+    useEffect(() => {
+      // Fonction pour récupérer les données des magasins depuis votre API
+      const fetchShops = async () => {
+          try {
+              const response = await fetch('http://localhost:8080/api/shop');
+              if (response.ok) {
+                  const data = await response.json();
+                  console.log(data);
+                  console.log("HELLLOOOO");
+                  setShops(data); // Met à jour l'état avec les données des magasins récupérées
+              } else {
+                  console.error('1 - Erreur lors de la récupération des magasins:', response.status);
+              }
+          } catch (error) {
+              console.error('2 - Erreur lors de la récupération des magasins:', error);
+          }
+      };
 
-        if (response.ok) {
-          const data = await response.json();
-          console.log('Données des magasins :', data);
-          // Effectuez ici le traitement des données de magasins reçues
-        } else {
-          console.error('La requête a échoué');
-        }
-      } catch (error) {
-        console.error('Erreur lors de la requête : ', error);
-      }
-    };
-
-    fetchShopData();
-  }, []); // Assurez-vous de passer les dépendances appropriées si nécessaire
-
+      fetchShops(); // Appel de la fonction pour récupérer les magasins au chargement du composant
+    }, []); // Utilisation d'un tableau vide pour n'exécuter useEffect qu'une seule fois après le rendu initial
 
 
     return (
