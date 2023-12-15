@@ -29,8 +29,9 @@ const CreateAccountScreen = ({navigation}) => {
       console.log(mdp);
       console.log(immatriculation);
     }
+  }
 
-const CreateAccountScreen = () => {
+  const CreateAccountScreen = () => {
     return (
         <View style={styles.container}>
         <Text style={styles.heading}>Bienvenue</Text>
@@ -48,10 +49,10 @@ const CreateAccountScreen = () => {
         </View>
       </View>
     )
+  }
 }
 
-
-const styles = StyleSheet.create({
+  const styles = StyleSheet.create({
     container: {
       flex: 1,
       //justifyContent: 'center',
@@ -99,4 +100,5 @@ const styles = StyleSheet.create({
       alignSelf:'center'
     }
   })
+
 export default CreateAccountScreen;
