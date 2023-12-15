@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductInCartService {
@@ -39,14 +40,17 @@ public class ProductInCartService {
         //Pour chaque produit, quel est le mafasin et quel est le produit ?
         for(ProductInCart product : productInCart){
             Product p = productController.getProductById(product.getIdProduct());
-            Shop s = shopController.getShopById(p.getIdMagasin);
-            //recuperer le magasin qui vaend ce produit (getIdMagasin dans Product)
+            Optional<Shop> s = shopController.getShopById(p.getIdMagasin());
+            //recuperer le magasin qui vend ce produit (getIdMagasin dans Product)
             if(carts.containsKey(s)){
                 carts.get(s).add(p);
             }else{
-                List<Product> listP = new ArrayList<>();
-                listP.add(p);
-                carts.put(s, listP);
+                if(s.isPresent() && s.get() != null) {
+                    Shop theShop = s.get();
+                    List<Product> listP = new ArrayList<>();
+                    listP.add(p);
+                    carts.put(theShop, listP);
+                }
             }
         }
         return carts;
