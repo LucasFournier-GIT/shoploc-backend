@@ -50,6 +50,8 @@ const CreateAccountScreen = ({navigation}) => {
           const data = await response.json();
 
           setToken(data.token);
+          navigation.navigate('HomeScreen');
+
         } catch (error) {
           console.error('Erreur lors de l\'inscription : ', error);
         }

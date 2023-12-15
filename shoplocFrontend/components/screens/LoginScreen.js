@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import CustomInput from '../CustomInput';
 import CustomButton from '../CustomButton';
@@ -9,6 +9,7 @@ const LoginScreen = ({ navigation }) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [token, setToken] = useState('');
 
   const handleEmailChange = (value) => { setEmail(value); };
   const handlePasswordChange = (value) => { setPassword(value); };
@@ -42,6 +43,14 @@ const LoginScreen = ({ navigation }) => {
       console.error('Erreur lors de la requête : ', error);
     }
   };
+
+  // Effectue la requête lorsque le token change
+  useEffect(() => {
+    if (token) {
+      // Faites quelque chose avec le token, par exemple, stockez-le localement
+      console.log('Token enregistré : ', token);
+    }
+  }, [token]);
 
 
   return (
