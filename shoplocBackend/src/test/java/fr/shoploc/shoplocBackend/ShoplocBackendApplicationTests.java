@@ -9,5 +9,4 @@ class ShoplocBackendApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }
