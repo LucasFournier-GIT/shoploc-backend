@@ -3,51 +3,94 @@ import CustomInput from '../CustomInput';
 import CustomButton from '../CustomButton';
 import { useState } from 'react';
 import colors from "./../../assets/colors";
+import { useEffect } from 'react';
 
 const CreateAccountScreen = ({navigation}) => {
 
+  // États locaux pour stocker les informations du formulaire et le token
   const [nom, setNom] = useState('');
   const [prenom, setPrenom] = useState('');
   const [mail, setMail] = useState('');
   const [mdp, setMdp] = useState('');
   const [confMdp, setConfMdp] = useState('');
   const [immatriculation, setImmatriculation] = useState('');
+  const [token, setToken] = useState('');
 
-  const handleChangeNom = (value) => { setNom(value); };
+  const handleChangeNom = (value) => { 
+    console.log("HELLO0");
+    setNom(value); console.log("nom : ", value)
+  };
   const handleChangePrenom = (value) => { setPrenom(value); };
   const handleChangeMail = (value) => { setMail(value); };
   const handleChangeMdp = (value) => { setMdp(value); };
   const handleChangeConfMdp = (value) => { setConfMdp(value); };
   const handleChangeImmatriculation = (value) => { setImmatriculation(value); };
 
-  const handleCreateAccount = () => {
-    //TODO verifier que le compte n'est pas déjà enregistré
-    if(mdp === confMdp){
+    // Fonction pour envoyer la requête d'inscription
+    const handleCreateAccount = async () => {
       console.log(nom);
       console.log(prenom);
       console.log(mail);
       console.log(mdp);
-      console.log(immatriculation);
-    }
+      //console.log(immatriculation);
+      console.log(token);
 
-const CreateAccountScreen = () => {
+      if (mdp === confMdp) {
+        try {
+          const response = await fetch('http://localhost:8080/api/auth/register', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: mail,
+              password: mdp,
+            }),
+          });
+          const data = await response.json();
+
+          setToken(data.token);
+        } catch (error) {
+          console.error('Erreur lors de l\'inscription : ', error);
+        }
+      }
+      console.log(nom);
+      console.log(prenom);
+      console.log(mail);
+      console.log(mdp);
+      //console.log(immatriculation);
+      console.log(token);
+    
+    };
+
+    // Effectue la requête lorsque le token change
+    useEffect(() => {
+      if (token) {
+        // Faites quelque chose avec le token, par exemple, stockez-le localement
+        console.log('Token enregistré : ', token);
+      }
+    }, [token]);
+
     return (
         <View style={styles.container}>
         <Text style={styles.heading}>Bienvenue</Text>
         <View style={styles.content}>
           <Text style={styles.heading2}>Inscription</Text>
-          <CustomInput type={"text"} label={"Votre nom"} placeholder={"Votre nom"}/>
-          <CustomInput type={"email-address"} label={"Votre adresse email"} placeholder={"Votre adresse email"}/>
-          <CustomInput type={"text"} label={"Votre immatrirculation (facultative)"} placeholder={"Votre numéro d'immatriculation"}/>
-          <CustomInput type={"password"} label={"Votre mot de passe"} placeholder={"Votre mot de passe"}/>
-          <CustomInput type={"password"} label={"Confirmation - Votre mot de passe"} placeholder={"Votre mot de passe"}/>
-          <CustomButton text={"Créer un compte"}/>
+          <CustomInput type={"text"} label={"Votre nom"} placeholder={"Votre nom"} onChange={handleChangeNom} />
+          <CustomInput type={"text"} label={"Votre prénom"} placeholder={"Votre prénom"} onChange={handleChangePrenom} />
+        <CustomInput type={"email-address"} label={"Votre adresse email"} placeholder={"Votre adresse email"} onChange={handleChangeMail} />
+        <CustomInput type={"text"} label={"Votre immatriculation (facultative)"} placeholder={"Votre numéro d'immatriculation"} onChange={handleChangeImmatriculation} />
+        <CustomInput type={"password"} label={"Votre mot de passe"} placeholder={"Votre mot de passe"} onChange={handleChangeMdp} />
+        <CustomInput type={"password"} label={"Confirmation - Votre mot de passe"} placeholder={"Votre mot de passe"} onChange={handleChangeConfMdp} />
+
+        <CustomButton text={"Créer un compte"} onPress={handleCreateAccount} />
           <Text style={styles.footer}>
               ShopLoc by SEQI
           </Text>
         </View>
       </View>
     )
+
 }
 
 
@@ -99,4 +142,5 @@ const styles = StyleSheet.create({
       alignSelf:'center'
     }
   })
+
 export default CreateAccountScreen;
