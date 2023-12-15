@@ -1,4 +1,4 @@
-package fr.shoploc.shoplocBackend.usermanager.config;
+package fr.shoploc.shoplocBackend.config;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

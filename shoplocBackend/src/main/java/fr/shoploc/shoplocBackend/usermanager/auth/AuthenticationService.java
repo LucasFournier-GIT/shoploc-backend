@@ -1,7 +1,7 @@
 package fr.shoploc.shoplocBackend.usermanager.auth;
 
-import fr.shoploc.shoplocBackend.usermanager.UserRepository;
-import fr.shoploc.shoplocBackend.usermanager.config.JwtService;
+import fr.shoploc.shoplocBackend.usermanager.user.UserRepository;
+import fr.shoploc.shoplocBackend.config.JwtService;
 import fr.shoploc.shoplocBackend.usermanager.user.Role;
 import fr.shoploc.shoplocBackend.usermanager.user.User;
 import lombok.RequiredArgsConstructor;

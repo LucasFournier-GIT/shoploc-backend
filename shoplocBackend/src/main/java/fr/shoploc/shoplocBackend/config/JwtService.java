@@ -1,4 +1,4 @@
-package fr.shoploc.shoplocBackend.usermanager.config;
+package fr.shoploc.shoplocBackend.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -16,7 +16,7 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    private static final String SECRET_KEY = "6967644c6a3638337575324f4154777255427456474469444f654e7651764a78";
+    private static final String SECRET_KEY = "1097e618a2bc3cf1330720bb393c4242ea5bb5f3613a45c5ac5f3290a9a2db98";
     public String extractUserEmail(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -57,7 +57,12 @@ public class JwtService {
     }
 
     public Claims extractAllClaims(String token) {
-        return Jwts.parser().decryptWith(getSignedKey()).build().parseSignedClaims(token).getPayload();
+        return Jwts
+                .parser()
+                .setSigningKey(getSignedKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     private SecretKey getSignedKey() {
