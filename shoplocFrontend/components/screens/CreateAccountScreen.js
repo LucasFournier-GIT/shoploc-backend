@@ -1,11 +1,15 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import CustomInput from '../CustomInput';
 import CustomButton from '../CustomButton';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import colors from "./../../assets/colors";
 import { useEffect } from 'react';
+import { AuthContext } from '../authContext';
 
 const CreateAccountScreen = ({navigation}) => {
+
+  const { updateToken } = useContext(AuthContext);
+
 
   // États locaux pour stocker les informations du formulaire et le token
   const [nom, setNom] = useState('');
@@ -50,9 +54,10 @@ const CreateAccountScreen = ({navigation}) => {
           const data = await response.json();
 
           setToken(data.token);
+          updateToken(data.token);
           navigation.navigate('HomeScreen');
 
-        } catch (error) {
+        } catch (error) { 
           console.error('Erreur lors de l\'inscription : ', error);
         }
       }

@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import CustomInput from '../CustomInput';
 import CustomButton from '../CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import colors from "./../../assets/colors";
+import { AuthContext } from '../authContext';
 
 const LoginScreen = ({ navigation }) => {
 
@@ -13,6 +14,8 @@ const LoginScreen = ({ navigation }) => {
 
   const handleEmailChange = (value) => { setEmail(value); };
   const handlePasswordChange = (value) => { setPassword(value); };
+  const { updateToken } = useContext(AuthContext);
+
 
   const handleConnexion = async () => {
     console.log(email);
@@ -33,6 +36,7 @@ const LoginScreen = ({ navigation }) => {
         const data = await response.json();
         const receivedToken = data.token;
         setToken(receivedToken);
+        updateToken(receivedToken);
         console.log('Token reçu : ', receivedToken);
         // Naviguer vers la prochaine vue après la connexion réussie
         navigation.navigate('HomeScreen');

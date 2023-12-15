@@ -1,17 +1,18 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, Button, StyleSheet, ScrollView, ScrollViewBase } from 'react-native';
 import ShopCartSummary from './../ShopCartSummary';
 import CustomNavBar from '../CustomNavBar';
 import colors from "./../../assets/colors";
+import { AuthContext } from '../authContext';
 
 const CartScreen = ({ navigation }) => {
     
   const [userCarts, setUserCarts] = useState([]);
+  const { token, updateToken } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchUserCarts = async () => {
       try {
-        const token = 'eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJjYW1pbGxlcm1wb2lyaWVyQGdtYWlsLmNvbSIsImlhdCI6MTcwMjY1MjIzOCwiZXhwIjoxNzAyNjUzNjc4fQ.jquyVK7G0xVR4HQvBQNxtYKA6v_c_g5v5P9RuQIxokUE8zi6kiMCa0nU13QJyjLc'; 
         const response = await fetch('http://localhost:8080/product_in_cart/user_carts', {
           method: 'GET',
           headers: {
@@ -37,7 +38,7 @@ const CartScreen = ({ navigation }) => {
 
 
       const handleValidateAll = () => {
-        const totalAmount = storeCarts.reduce((acc, store) => {
+        const totalAmount = userCarts.reduce((acc, store) => {
           return (
             acc +
             store.products.reduce((storeAcc, product) => {
@@ -53,9 +54,10 @@ const CartScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
         <Text style={styles.heading}>Paniers</Text>
+        <Text>{token}</Text>
         <ScrollView style={styles.card}>
 
-          {storeCarts.map((cart) => (
+          {userCarts.map((cart) => (
             <ShopCartSummary navigation={navigation} key={cart.id} store={cart} />
           ))}
       </ScrollView>

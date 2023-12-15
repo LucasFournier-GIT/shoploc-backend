@@ -11,37 +11,38 @@ const ShopCartSummary = ({ store, navigation }) => {
 // Fonction pour augmenter la quantité d'un produit dans le panier
 const handleIncrease = (productId) => {
   // Trouver le produit dans le panier en fonction de son ID (productId)
-  //const updatedProducts = store.products.map((product) => {
-  //  if (product.id === productId) {
-  //    return { ...product, quantity: product.quantity + 1 };
-  //  }
-  //  return product;
-  //S});
+  const updatedProducts = store.products.map((product) => {
+    if (product.id === productId) {
+      return { ...product, quantity: product.quantity + 1 };
+    }
+    return product;
+  });
 
   // Mettre à jour le panier avec la quantité mise à jour du produit
-  //setStore({ ...store, products: updatedProducts });
+  // Ici, mettez à jour l'état du panier avec la variable `updatedProducts`
 };
 
-// Fonction pour diminuer la quantité d'un produit dans le panier
-const handleDecrease = (productId) => {
-  // Trouver le produit dans le panier en fonction de son ID (productId)
-  //const updatedProducts = store.products.map((product) => {
-  //  if (product.id === productId && product.quantity > 0) {
-  //    return { ...product, quantity: product.quantity - 1 };
-  //  }
-  //  return product;
-  //});
+  // Fonction pour diminuer la quantité d'un produit dans le panier
+  const handleDecrease = (productId) => {
+    // Trouver le produit dans le panier en fonction de son ID (productId)
+    const updatedProducts = store.products.map((product) => {
+      if (product.id === productId && product.quantity > 0) {
+        return { ...product, quantity: product.quantity - 1 };
+      }
+      return product;
+    });
 
-  // Mettre à jour le panier avec la quantité mise à jour du produit
-};
+    // Mettre à jour le panier avec la quantité mise à jour du produit
+    // Ici, mettez à jour l'état du panier avec la variable `updatedProducts`
+  };
 
-const handleValidate = () => {
+  const handleValidate = () => {
   const totalAmount = store.products.reduce((acc, product) => {
     return acc + product.price * product.quantity;
   }, 0);
 
   navigation.navigate("RecapCartScreen", { TotalAmount: totalAmount, navigation: navigation });
-};
+  };
 
   return (
     <View style={styles.container}>
