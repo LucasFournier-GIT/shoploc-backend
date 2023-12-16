@@ -5,33 +5,37 @@ import CustomNavBar from '../CustomNavBar';
 import colors from "./../../assets/colors";
 
 const CartScreen = ({ navigation }) => {
-    const storeCarts = [
-        {
-          id: 1,
-          name: 'Magasin A',
-          products: [
-            { id: 101, name: 'Produit 1', quantity: 2, price: 10.99 },
-            { id: 102, name: 'Produit 2', quantity: 1, price: 7.49 },
-          ],
-        },
-        {
-          id: 2,
-          name: 'Magasin B',
-          products: [
-            { id: 201, name: 'Produit 3', quantity: 3, price: 5.99 },
-            { id: 202, name: 'Produit 4', quantity: 1, price: 12.99 },
-          ],
-        },
-        {
-          id: 3,
-          name: 'Magasin C',
-          products: [
-            { id: 203, name: 'Produit 5', quantity: 2, price: 8.49 },
-            { id: 204, name: 'Produit 6', quantity: 4, price: 9.99 },
-          ],
-        },
-      ];
-      
+    
+  const [userCarts, setUserCarts] = useState([]);
+
+  useEffect(() => {
+    const fetchUserCarts = async () => {
+      try {
+        const token = 'eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJjYW1pbGxlcm1wb2lyaWVyQGdtYWlsLmNvbSIsImlhdCI6MTcwMjY1MjIzOCwiZXhwIjoxNzAyNjUzNjc4fQ.jquyVK7G0xVR4HQvBQNxtYKA6v_c_g5v5P9RuQIxokUE8zi6kiMCa0nU13QJyjLc'; 
+        const response = await fetch('http://localhost:8080/product_in_cart/user_carts', {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Données des paniers de l\'utilisateur :', data);
+          setUserCarts(data);
+        } else {
+          console.error('La requête a échoué');
+        }
+      } catch (error) {
+        console.error('Erreur lors de la requête : ', error);
+      }
+    };
+
+    fetchUserCarts();
+  }, []); // Assurez-vous de passer les dépendances appropriées si nécessaire
+
+
       const handleValidateAll = () => {
         const totalAmount = storeCarts.reduce((acc, store) => {
           return (

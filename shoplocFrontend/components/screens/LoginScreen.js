@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import CustomInput from '../CustomInput';
 import CustomButton from '../CustomButton';
@@ -9,19 +9,49 @@ const LoginScreen = ({ navigation }) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [token, setToken] = useState('');
 
   const handleEmailChange = (value) => { setEmail(value); };
   const handlePasswordChange = (value) => { setPassword(value); };
 
-  const handleConnexion = () => {
+  const handleConnexion = async () => {
     console.log(email);
     console.log(password);
+    try {
+      const response = await fetch('http://localhost:8080/api/auth/authenticate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      });
 
-    //TODO Connexion avec email et MDP
-
-    //Si la connexion est réussie :
-    navigation.navigate('HomeScreen');
+      if (response.ok) {
+        const data = await response.json();
+        const receivedToken = data.token;
+        setToken(receivedToken);
+        console.log('Token reçu : ', receivedToken);
+        // Naviguer vers la prochaine vue après la connexion réussie
+        navigation.navigate('HomeScreen');
+      } else {
+        console.error('La requête a échoué');
+      }
+    } catch (error) {
+      console.error('Erreur lors de la requête : ', error);
+    }
   };
+
+  // Effectue la requête lorsque le token change
+  useEffect(() => {
+    if (token) {
+      // Faites quelque chose avec le token, par exemple, stockez-le localement
+      console.log('Token enregistré : ', token);
+    }
+  }, [token]);
+
 
   return (
     <View style={styles.container}>
