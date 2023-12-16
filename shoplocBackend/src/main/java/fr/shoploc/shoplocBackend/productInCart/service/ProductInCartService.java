@@ -21,13 +21,13 @@ public class ProductInCartService {
     private final ProductController productController;
 
     //TODO recuperer l id du user grace a son token
-    private Long idUser = 1L;
-
+    private String idUser = "camillermpoirier@gmail.com";
     public ProductInCartService(ProductInCartRepository productInCartRepository, ShopController shopController, ProductController productController){
         this.productInCartRepository = productInCartRepository;
         this.shopController = shopController;
         this.productController = productController;
     }
+
     public void addProductToCart(Long idProduct) {
         ProductInCart productInCart = new ProductInCart(idProduct, idUser);
         productInCartRepository.save(productInCart);
@@ -54,5 +54,10 @@ public class ProductInCartService {
             }
         }
         return carts;
+    }
+
+    public void removeFromCart(Long idProduct) {
+        ProductInCart p = productInCartRepository.findAllByIdUserAndIdProduct(idUser, idProduct);
+        productInCartRepository.delete(p);
     }
 }

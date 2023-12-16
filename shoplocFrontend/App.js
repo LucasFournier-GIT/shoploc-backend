@@ -10,7 +10,7 @@ import ShopScreen from './components/screens/ShopScreen';
 import CartScreen from './components/screens/CartScreen';
 import PaymentScreen from './components/screens/PaymentScreen';
 import RecapCart from './components/screens/RecapCartScreen';
-import { AuthProvider } from './components/authContext';
+import { AuthProvider } from './components/AuthContext';
 
 const Stack = createStackNavigator();
 

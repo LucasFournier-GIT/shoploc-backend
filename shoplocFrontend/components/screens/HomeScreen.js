@@ -9,7 +9,7 @@ import ShopCard from "../ShopCard";
 import logo from "./../../assets/logo.png";
 import colors from "./../../assets/colors";
 import { useContext, useEffect, useState } from "react";  
-import { AuthContext } from "../authContext";
+import { AuthContext } from "../AuthContext";
 
 const HomeScreen = ({ navigation }) => {
 
@@ -18,25 +18,30 @@ const HomeScreen = ({ navigation }) => {
 
 
     useEffect(() => {
-      // Fonction pour récupérer les données des magasins depuis votre API
-      const fetchShops = async () => {
-          try {
-              const response = await fetch('http://localhost:8080/api/shop');
-              if (response.ok) {
-                  const data = await response.json();
-                  console.log(data);
-                  setShops(data); 
-              } else {
-                  console.error('1 - Erreur lors de la récupération des magasins:', response.status);
-              }
-          } catch (error) {
-              console.error('2 - Erreur lors de la récupération des magasins:', error);
-          }
+      const fetchShopData = async () => {
+        try {
+          const response = await fetch('http://localhost:8080/api/shop', {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+          }).then((res)=> {
+            return res.json(); 
+          }).then((data)=>{
+            setShops(data);
+            console.log("THE DATA", data);
+          });
+
+          // Reste du code pour gérer la réponse de la requête...
+        } catch (error) {
+          console.error('Erreur lors de la requête : ', error);
+        }
       };
-
-      fetchShops(); // Appel de la fonction pour récupérer les magasins au chargement du composant
-    }, []); // Utilisation d'un tableau vide pour n'exécuter useEffect qu'une seule fois après le rendu initial
-
+    
+      fetchShopData();
+    }, [token]);
+    
 
     return (
         <View style={styles.View}>
@@ -49,16 +54,15 @@ const HomeScreen = ({ navigation }) => {
               <Image source={logo} style={styles.logo} />
               <CustomSearchBar></CustomSearchBar>
             </View>
-            <Text>{token}</Text>
             <ScrollView contentContainerStyle={styles.scrollViewContent}>
                 {shops.map((shop) => (
                 
                 <ShopCard
                     key={shop.id}
-                    name={shop.name} 
+                    name={shop.nom} 
                     status={shop.status}
-                    hours={shop.hours}
-                    imageUrl={shop.imageUrl}
+                    hours={shop.horairesOuverture}
+                    imageUrl={shop.image}
                     navigation={navigation}
                     id={shop.id}
                 />

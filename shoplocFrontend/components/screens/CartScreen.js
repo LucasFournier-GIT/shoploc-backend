@@ -3,7 +3,7 @@ import { View, Text, Button, StyleSheet, ScrollView, ScrollViewBase } from 'reac
 import ShopCartSummary from './../ShopCartSummary';
 import CustomNavBar from '../CustomNavBar';
 import colors from "./../../assets/colors";
-import { AuthContext } from '../authContext';
+import { AuthContext } from '../AuthContext';
 
 const CartScreen = ({ navigation }) => {
     

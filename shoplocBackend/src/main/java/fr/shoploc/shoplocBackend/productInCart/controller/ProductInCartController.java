@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @RestController
-@RequestMapping("/product_in_cart")
+@RequestMapping("/api/product_in_cart")
 public class ProductInCartController {
 
     private final ProductInCartService productInCartService;
@@ -19,7 +19,7 @@ public class ProductInCartController {
     }
 
     //endpoint pour ajouter un produit dans un panier
-    @PostMapping("/{idProduct}/{idUser}")
+    @PostMapping("/{idProduct}")
     public void addProductToCart(
             @PathVariable(name = "idProduct") Long idProduct){
         productInCartService.addProductToCart(idProduct);
@@ -31,4 +31,8 @@ public class ProductInCartController {
         return productInCartService.getProductsInCart();
     }
 
+    @DeleteMapping("/{idProduct}")
+    public void removeProductFromCart(@PathVariable Long idProduct){
+        this.productInCartService.removeFromCart(idProduct);
+    }
 }

@@ -4,7 +4,7 @@ import CustomInput from '../CustomInput';
 import CustomButton from '../CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import colors from "./../../assets/colors";
-import { AuthContext } from '../authContext';
+import { AuthContext } from '../AuthContext';
 
 const LoginScreen = ({ navigation }) => {
 

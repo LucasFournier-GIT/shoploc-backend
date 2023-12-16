@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
 import CustomSearchBar from './../CustomSearchBar';
 import CustomNavBar from './../CustomNavBar';
@@ -6,56 +6,41 @@ import ProductCard from './../ProductCard';
 import logo from './../../assets/logo.png';
 import { Octicons } from '@expo/vector-icons'; 
 import colors from "./../../assets/colors";
+import { AuthContext } from '../AuthContext';
 
 // Liste fictive de produits
-const dummyProducts = [
-  {
-    id: 1,
-    name: 'Produit 1',
-    quantity: 5,
-    description: 'Description du produit 1',
-    imageUrl: 'https://www.cuisinonsencouleurs.fr/wp-content/uploads/2012/03/DSC_0387k-1.jpg',
-  },
-  {
-    id: 2,
-    name: 'Produit 2',
-    quantity: 2,
-    description: 'Description du produit 2',
-    imageUrl: 'https://www.cuisinonsencouleurs.fr/wp-content/uploads/2012/03/DSC_0387k-1.jpg',
-  },
-  {
-    id: 3,
-    name: 'Produit 3',
-    quantity: 0,
-    description: 'Description du produit 3',
-    imageUrl: 'https://www.cuisinonsencouleurs.fr/wp-content/uploads/2012/03/DSC_0387k-1.jpg',
-  },
-  {
-    id: 4,
-    name: 'Produit 4',
-    quantity: 5,
-    description: 'Description du produit 4',
-    imageUrl: 'https://www.cuisinonsencouleurs.fr/wp-content/uploads/2012/03/DSC_0387k-1.jpg',
-  },
-];
+
 
 const ShopScreen = ({ route, navigation }) => {
   const { shopId } = route.params;
+  const { token } = useContext(AuthContext);
 
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(`http://localhost/api/product/shop/${shopId}`);
-        setProducts(response.data);
+        const response = await fetch(`http://localhost:8080/api/product/shop/${shopId}`, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }).then((res)=> {
+          return res.json(); 
+        }).then((data)=>{
+          setProducts(data);
+          console.log("THE DATA", data);
+        });
+
       } catch (error) {
         console.error('Error fetching products:', error);
       }
     };
 
     fetchProducts();
-  }, [shopId]);
+  }, [shopId, token]);
+
 
 
   return (
@@ -80,13 +65,13 @@ const ShopScreen = ({ route, navigation }) => {
 
       {/* Contenu de la liste de produits */}
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        {dummyProducts.map((product) => (
+        {products.map((product) => (
           <ProductCard
             key={product.id}
-            name={product.name}
-            quantity={product.quantity}
+            name={product.nom}
+            quantity={product.disponibilite}
             description={product.description}
-            imageUrl={product.imageUrl}
+            imageUrl={product.image}
             navigation={navigation}
             id={product.id}
           />

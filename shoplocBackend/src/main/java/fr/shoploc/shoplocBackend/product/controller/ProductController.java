@@ -30,8 +30,9 @@ public class ProductController {
 
     @GetMapping("/shop/{shopId}")
     public List<Product> getProductsByShopId(@PathVariable Long shopId) {
-        List<Product> products = productService.getAllProductsByShopId(shopId);
-        return products;
+        return productService.getAllProductsByShopId(shopId);
     }
+
+
 
 }

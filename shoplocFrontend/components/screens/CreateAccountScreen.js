@@ -4,7 +4,7 @@ import CustomButton from '../CustomButton';
 import { useContext, useState } from 'react';
 import colors from "./../../assets/colors";
 import { useEffect } from 'react';
-import { AuthContext } from '../authContext';
+import { AuthContext } from '../AuthContext';
 
 const CreateAccountScreen = ({navigation}) => {
 
@@ -32,12 +32,7 @@ const CreateAccountScreen = ({navigation}) => {
 
     // Fonction pour envoyer la requête d'inscription
     const handleCreateAccount = async () => {
-      console.log(nom);
-      console.log(prenom);
-      console.log(mail);
-      console.log(mdp);
-      //console.log(immatriculation);
-      console.log(token);
+
 
       if (mdp === confMdp) {
         try {
@@ -80,16 +75,18 @@ const CreateAccountScreen = ({navigation}) => {
 
     return (
         <View style={styles.container}>
-        <Text style={styles.heading}>Bienvenue</Text>
-        <View style={styles.content}>
-          <Text style={styles.heading2}>Inscription</Text>
-          <CustomInput type={"text"} label={"Votre nom"} placeholder={"Votre nom"} onChange={handleChangeNom} />
-          <CustomInput type={"text"} label={"Votre prénom"} placeholder={"Votre prénom"} onChange={handleChangePrenom} />
-        <CustomInput type={"email-address"} label={"Votre adresse email"} placeholder={"Votre adresse email"} onChange={handleChangeMail} />
-        <CustomInput type={"text"} label={"Votre immatriculation (facultative)"} placeholder={"Votre numéro d'immatriculation"} onChange={handleChangeImmatriculation} />
-        <CustomInput type={"password"} label={"Votre mot de passe"} placeholder={"Votre mot de passe"} onChange={handleChangeMdp} />
-        <CustomInput type={"password"} label={"Confirmation - Votre mot de passe"} placeholder={"Votre mot de passe"} onChange={handleChangeConfMdp} />
+          <Text style={styles.heading}>Bienvenue</Text>
+          <View style={styles.content}>
+            <Text style={styles.heading2}>Inscription</Text>
+            <ScrollView>
 
+                <CustomInput type={"text"} label={"Votre nom"} placeholder={"Votre nom"} onChange={handleChangeNom} />
+                <CustomInput type={"text"} label={"Votre prénom"} placeholder={"Votre prénom"} onChange={handleChangePrenom} />
+              <CustomInput type={"email-address"} label={"Votre adresse email"} placeholder={"Votre adresse email"} onChange={handleChangeMail} />
+              <CustomInput type={"text"} label={"Votre immatriculation (facultative)"} placeholder={"Votre numéro d'immatriculation"} onChange={handleChangeImmatriculation} />
+              <CustomInput type={"password"} label={"Votre mot de passe"} placeholder={"Votre mot de passe"} onChange={handleChangeMdp} />
+              <CustomInput type={"password"} label={"Confirmation - Votre mot de passe"} placeholder={"Votre mot de passe"} onChange={handleChangeConfMdp} />
+            </ScrollView>
         <CustomButton text={"Créer un compte"} onPress={handleCreateAccount} />
           <Text style={styles.footer}>
               ShopLoc by SEQI

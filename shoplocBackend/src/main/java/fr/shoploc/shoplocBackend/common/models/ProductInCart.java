@@ -13,13 +13,13 @@ public class ProductInCart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long idUser;
     private Long idProduct;
     private int quantity;
+    private String idUser;
 
-    public ProductInCart(Long idProduct, Long idUser){
-        this.idUser = idUser;
+    public ProductInCart(Long idProduct, String idUser){
         this.idProduct = idProduct;
+        this.idUser = idUser;
     }
 
     public ProductInCart(){}
