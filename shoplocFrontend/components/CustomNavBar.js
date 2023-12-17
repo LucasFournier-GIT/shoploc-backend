@@ -83,20 +83,17 @@ const styles = StyleSheet.create({
   
     },
     navBar: {
-      flexDirection: 'row', // Pour aligner les éléments horizontalement
-      justifyContent: 'space-around', // Pour répartir l'espace entre les éléments
-      height:"10%",
-      width:"90%",
-      alignItems: 'center', // Pour centrer verticalement les éléments
-      backgroundColor: colors.primary,
-      alignSelf:'center',
-      borderRadius:32.5,
-      //paddingVertical: 10,
-      //paddingHorizontal: 20,
-      position: 'absolute',
-      bottom: 10,
-      //left: 0,
-      //right: 0,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        height: "10%",
+        width: "90%",
+        alignItems: 'center',
+        backgroundColor: colors.primary,
+        alignSelf: 'center',
+        borderRadius: 32.5,
+        position: 'sticky',
+        bottom: 0, 
+        zIndex: 1, 
     },
     navText: {
       color: 'white',

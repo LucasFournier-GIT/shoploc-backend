@@ -1,11 +1,16 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import CustomInput from '../CustomInput';
 import CustomButton from '../CustomButton';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import colors from "./../../assets/colors";
 import { useEffect } from 'react';
+import { AuthContext } from '../AuthContext';
+import CustomModal from '../CustomModal';
 
 const CreateAccountScreen = ({navigation}) => {
+
+  const { updateToken } = useContext(AuthContext);
+
 
   // États locaux pour stocker les informations du formulaire et le token
   const [nom, setNom] = useState('');
@@ -15,6 +20,8 @@ const CreateAccountScreen = ({navigation}) => {
   const [confMdp, setConfMdp] = useState('');
   const [immatriculation, setImmatriculation] = useState('');
   const [token, setToken] = useState('');
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalText, setModalText] = useState('');
 
   const handleChangeNom = (value) => { 
     console.log("HELLO0");
@@ -26,45 +33,42 @@ const CreateAccountScreen = ({navigation}) => {
   const handleChangeConfMdp = (value) => { setConfMdp(value); };
   const handleChangeImmatriculation = (value) => { setImmatriculation(value); };
 
-    // Fonction pour envoyer la requête d'inscription
-    const handleCreateAccount = async () => {
-      console.log(nom);
-      console.log(prenom);
-      console.log(mail);
-      console.log(mdp);
-      //console.log(immatriculation);
-      console.log(token);
-
-      if (mdp === confMdp) {
-        try {
-          const response = await fetch('http://localhost:8080/api/auth/register', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              email: mail,
-              password: mdp,
-            }),
-          });
+  const handleCreateAccount = async () => {
+    if (mdp === confMdp) {
+      try {
+        const response = await fetch('http://localhost:8080/api/auth/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: mail,
+            password: mdp,
+          }),
+        });
+  
+        if (response.status === 409) {
+          setModalText("Cet utilisateur existe déjà");
+          setIsModalVisible(true);
+        } else if (response.ok) {
           const data = await response.json();
-
           setToken(data.token);
+          updateToken(data.token);
           navigation.navigate('HomeScreen');
-
-        } catch (error) {
-          console.error('Erreur lors de l\'inscription : ', error);
+        } else {
+          setModalText("Erreur lors de l'inscription");
+          setIsModalVisible(true);
         }
+      } catch (error) {
+        setModalText("Erreur lors de l'inscription: " + error);
+        setIsModalVisible(true);
       }
-      console.log(nom);
-      console.log(prenom);
-      console.log(mail);
-      console.log(mdp);
-      //console.log(immatriculation);
-      console.log(token);
-    
-    };
-
+    } else {
+      setModalText("Les mots de passe saisis ne correspondent pas");
+      setIsModalVisible(true);
+    }
+  };
+  
     // Effectue la requête lorsque le token change
     useEffect(() => {
       if (token) {
@@ -75,20 +79,28 @@ const CreateAccountScreen = ({navigation}) => {
 
     return (
         <View style={styles.container}>
-        <Text style={styles.heading}>Bienvenue</Text>
-        <View style={styles.content}>
-          <Text style={styles.heading2}>Inscription</Text>
-          <CustomInput type={"text"} label={"Votre nom"} placeholder={"Votre nom"} onChange={handleChangeNom} />
-          <CustomInput type={"text"} label={"Votre prénom"} placeholder={"Votre prénom"} onChange={handleChangePrenom} />
-        <CustomInput type={"email-address"} label={"Votre adresse email"} placeholder={"Votre adresse email"} onChange={handleChangeMail} />
-        <CustomInput type={"text"} label={"Votre immatriculation (facultative)"} placeholder={"Votre numéro d'immatriculation"} onChange={handleChangeImmatriculation} />
-        <CustomInput type={"password"} label={"Votre mot de passe"} placeholder={"Votre mot de passe"} onChange={handleChangeMdp} />
-        <CustomInput type={"password"} label={"Confirmation - Votre mot de passe"} placeholder={"Votre mot de passe"} onChange={handleChangeConfMdp} />
+          <Text style={styles.heading}>Bienvenue</Text>
+          <View style={styles.content}>
+            <Text style={styles.heading2}>Inscription</Text>
+            <ScrollView>
 
+                <CustomInput type={"text"} label={"Votre nom"} placeholder={"Votre nom"} onChange={handleChangeNom} />
+                <CustomInput type={"text"} label={"Votre prénom"} placeholder={"Votre prénom"} onChange={handleChangePrenom} />
+              <CustomInput type={"email-address"} label={"Votre adresse email"} placeholder={"Votre adresse email"} onChange={handleChangeMail} />
+              <CustomInput type={"text"} label={"Votre immatriculation (facultative)"} placeholder={"Votre numéro d'immatriculation"} onChange={handleChangeImmatriculation} />
+              <CustomInput type={"password"} label={"Votre mot de passe"} placeholder={"Votre mot de passe"} onChange={handleChangeMdp} />
+              <CustomInput type={"password"} label={"Confirmation - Votre mot de passe"} placeholder={"Votre mot de passe"} onChange={handleChangeConfMdp} />
+            </ScrollView>
         <CustomButton text={"Créer un compte"} onPress={handleCreateAccount} />
           <Text style={styles.footer}>
               ShopLoc by SEQI
           </Text>
+          <CustomModal
+          isVisible={isModalVisible}
+          modalText={modalText}
+          onClose={() => setIsModalVisible(false)}
+          >
+          </CustomModal>
         </View>
       </View>
     )
