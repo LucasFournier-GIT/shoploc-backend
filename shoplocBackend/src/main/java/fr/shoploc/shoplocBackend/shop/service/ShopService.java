@@ -11,8 +11,6 @@ import java.util.Optional;
 
 @Service
 public class ShopService {
-
-    //private final OtherService otherService = ...
     private final ShopRepository shopRepository;
 
     @Autowired

@@ -2,57 +2,70 @@ package fr.shoploc.shoplocBackend.productInCart.service;
 
 import fr.shoploc.shoplocBackend.common.models.Product;
 import fr.shoploc.shoplocBackend.common.models.ProductInCart;
-import fr.shoploc.shoplocBackend.common.models.Shop;
+import fr.shoploc.shoplocBackend.config.JwtService;
 import fr.shoploc.shoplocBackend.productInCart.repository.ProductInCartRepository;
-import fr.shoploc.shoplocBackend.shop.controller.ShopController;
 import fr.shoploc.shoplocBackend.product.controller.ProductController;
+import fr.shoploc.shoplocBackend.usermanager.user.User;
+import fr.shoploc.shoplocBackend.usermanager.user.UserService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ProductInCartService {
 
     private final ProductInCartRepository productInCartRepository;
-    private final ShopController shopController;
     private final ProductController productController;
+    private final JwtService jwtService;
+    private final UserService userService;
 
-    //TODO recuperer l id du user grace a son token
-    private Long idUser = 1L;
-
-    public ProductInCartService(ProductInCartRepository productInCartRepository, ShopController shopController, ProductController productController){
+    public ProductInCartService(ProductInCartRepository productInCartRepository, ProductController productController, JwtService jwtService, UserService userService){
         this.productInCartRepository = productInCartRepository;
-        this.shopController = shopController;
         this.productController = productController;
+        this.jwtService = jwtService;
+        this.userService = userService;
     }
-    public void addProductToCart(Long idProduct) {
-        ProductInCart productInCart = new ProductInCart(idProduct, idUser);
+    public void addProductToCart(Long idProduct, String token) throws Exception {
+        Long userId = getUserId(token);
+        ProductInCart productInCart = new ProductInCart(idProduct, userId);
         productInCartRepository.save(productInCart);
     }
 
-    public HashMap<Shop, List<Product>> getProductsInCart() {
-        HashMap<Shop, List<Product>> carts = new HashMap<>();
-        List<ProductInCart> productInCart = productInCartRepository.findAllByIdUser(idUser);
-        //Recuperation des produits dans mon cart
-        //Pour chaque produit, quel est le mafasin et quel est le produit ?
-        for(ProductInCart product : productInCart){
-            Product p = productController.getProductById(product.getIdProduct());
-            Optional<Shop> s = shopController.getShopById(p.getIdMagasin());
-            //recuperer le magasin qui vend ce produit (getIdMagasin dans Product)
-            if(carts.containsKey(s)){
-                carts.get(s).add(p);
-            }else{
-                if(s.isPresent() && s.get() != null) {
-                    Shop theShop = s.get();
-                    List<Product> listP = new ArrayList<>();
-                    listP.add(p);
-                    carts.put(theShop, listP);
-                }
-            }
+    public void removeProductToCart(Long idProduct, String token) throws Exception {
+        Long userId = getUserId(token);
+        productInCartRepository.deleteByProductIdAndUserId(idProduct, userId);
+    }
+
+    public Map<Long, List<HashMap<Product, Integer>>> getCarts(String token) throws Exception {
+        Long userId = getUserId(token);
+
+        List<ProductInCart> productInCartList = productInCartRepository.findAllByIdUser(userId);
+
+        Map<Long, List<HashMap<Product, Integer>>> cartsByShop = new HashMap<>();
+
+        for (ProductInCart productInCart : productInCartList) {
+            Product product = productController.getProductById(productInCart.getIdProduct());
+            Long shopId = product.getIdMagasin();
+
+            HashMap<Product, Integer> productsWithQuantity = new HashMap<>();
+            productsWithQuantity.put(product, productInCart.getQuantity());
+
+            List<HashMap<Product, Integer>> shopCarts = cartsByShop.computeIfAbsent(shopId, k -> new ArrayList<>());
+
+            shopCarts.add(productsWithQuantity);
         }
-        return carts;
+
+        return cartsByShop;
+    }
+
+
+    public Long getUserId(String token) throws Exception {
+        String userEmail = jwtService.extractUserEmail(token);
+        Optional<User> user = userService.findUserByEmail(userEmail);
+        if (user.isPresent()) {
+            return user.get().getId();
+        } else {
+            throw new Exception("Utilisateur introuvable.");
+        }
     }
 }

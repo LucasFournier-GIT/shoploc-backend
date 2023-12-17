@@ -1,12 +1,10 @@
 package fr.shoploc.shoplocBackend.productInCart.controller;
 
-import fr.shoploc.shoplocBackend.common.models.Product;
-import fr.shoploc.shoplocBackend.common.models.Shop;
 import fr.shoploc.shoplocBackend.productInCart.service.ProductInCartService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
 
 @RestController
 @RequestMapping("/product_in_cart")
@@ -18,17 +16,37 @@ public class ProductInCartController {
         this.productInCartService = productInCartService;
     }
 
-    //endpoint pour ajouter un produit dans un panier
-    @PostMapping("/{idProduct}/{idUser}")
-    public void addProductToCart(
-            @PathVariable(name = "idProduct") Long idProduct){
-        productInCartService.addProductToCart(idProduct);
+    @PostMapping("/add/{idProduct}")
+    public ResponseEntity<String> addProductToCart(
+            @PathVariable(name = "idProduct") Long idProduct, @RequestHeader("Authorization") String authorizationHeader){
+        String token = authorizationHeader.substring(7);
+        try {
+            productInCartService.addProductToCart(idProduct, token);
+            return ResponseEntity.ok("Produit ajouté au panier.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
-    //endpoint pour avoir tous les produits d'un utilsateur, par magasin
+    @PostMapping("/remove/{idProduct}")
+    public ResponseEntity<String> removeProductToCart(
+            @PathVariable(name = "idProduct") Long idProduct, @RequestHeader("Authorization") String authorizationHeader){
+        String token = authorizationHeader.substring(7);
+        try {
+            productInCartService.removeProductToCart(idProduct, token);
+            return ResponseEntity.ok("Produit retiré du panier.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
     @GetMapping
-    public HashMap<Shop, List<Product>> getProductsInCart(){
-        return productInCartService.getProductsInCart();
+    public ResponseEntity<Object> getProductsInCart(@RequestHeader("Authorization") String authorizationHeader){
+        String token = authorizationHeader.substring(7);
+        try {
+            return ResponseEntity.ok().body(productInCartService.getCarts(token));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
-
 }
