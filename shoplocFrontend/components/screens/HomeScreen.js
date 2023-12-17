@@ -106,8 +106,13 @@ const styles = StyleSheet.create({
       marginRight:0
     },
     head: {
-      flexDirection:"row"
-    }
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      backgroundColor: colors.background,
+      position: 'sticky',
+      top: 0,
+      zIndex: 1, 
+      }
 });
 
 export default HomeScreen;
