@@ -6,16 +6,20 @@ import { useNavigation } from '@react-navigation/native';
 import colors from "./../../assets/colors";
 import { AuthContext } from '../AuthContext';
 
+import { Modal } from 'react-native';
+import CustomModal from '../CustomModal';
+
 const LoginScreen = ({ navigation }) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   const handleEmailChange = (value) => { setEmail(value); };
   const handlePasswordChange = (value) => { setPassword(value); };
   const { updateToken } = useContext(AuthContext);
-
 
   const handleConnexion = async () => {
     console.log(email);
@@ -38,9 +42,11 @@ const LoginScreen = ({ navigation }) => {
         setToken(receivedToken);
         updateToken(receivedToken);
         console.log('Token reçu : ', receivedToken);
-        // Naviguer vers la prochaine vue après la connexion réussie
+
         navigation.navigate('HomeScreen');
-      } else {
+      }else if (response.status === 403) {
+        setIsModalVisible(true); 
+      }else {
         console.error('La requête a échoué');
       }
     } catch (error) {
@@ -61,6 +67,11 @@ const LoginScreen = ({ navigation }) => {
     <View style={styles.container}>
       <Text style={styles.heading}>Bienvenue</Text>
       <View style={styles.content}>
+      <CustomModal
+        isVisible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+        modalText={"Erreur lors de l'authentification"}
+      />
         <Text style={styles.heading2}>Connexion</Text>
         <CustomInput
           type={"email-address"}

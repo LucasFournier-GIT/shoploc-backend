@@ -42,7 +42,6 @@ public class ShopController {
 
     // Endpoint pour avoir la liste de tous les magasins
     @GetMapping
-    @PermitAll
     public List<Shop> getAllShops() {
         System.out.println("PING GETALL");
         List<Shop> shops = shopService.getAllShops();

@@ -5,6 +5,7 @@ import CustomInput from '../CustomInput';
 import CustomButton from '../CustomButton';
 import logo from './../../assets/logo.png';
 import colors from "./../../assets/colors";
+import CustomModal from './../CustomModal';
 
 const PaymentScreen = ({ navigation, TotalAmount }) => {
   const [paymentOption, setPaymentOption] = useState(TotalAmount);
@@ -20,7 +21,6 @@ const PaymentScreen = ({ navigation, TotalAmount }) => {
   }
 
   const handleValidate = () => {
-    //confirmer le paiement
     //Retirer les éléments du panier
     setIsModalVisible(true);
 
@@ -71,20 +71,11 @@ const PaymentScreen = ({ navigation, TotalAmount }) => {
 
 
       </View>
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={isModalVisible}
-        onRequestClose={() => setIsModalVisible(false)}
-        >
-        <View style={styles.modalContainer}>
-            <View style={styles.modalContent}>
-            <Text style={styles.modalText}>Le paiement a bien été effectué</Text>
-            
-            <CustomButton text={"Fermer"} onPress={() => setIsModalVisible(false)}/>
-            </View>
-        </View>
-      </Modal>
+      <CustomModal
+        isVisible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+        modalText={"Le paiement a bien été effectué"}
+      />
       <CustomNavBar navigation={navigation} screen="CartScreen" />
 
     </View>
@@ -119,7 +110,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fond semi-transparent pour recouvrir l'écran
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', 
   },
   modalContent: {
     backgroundColor: 'white',

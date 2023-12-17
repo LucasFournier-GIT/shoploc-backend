@@ -8,8 +8,6 @@ import { Octicons } from '@expo/vector-icons';
 import colors from "./../../assets/colors";
 import { AuthContext } from '../AuthContext';
 
-// Liste fictive de produits
-
 
 const ShopScreen = ({ route, navigation }) => {
   const { shopId } = route.params;
@@ -45,7 +43,6 @@ const ShopScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* Première ligne */}
       <View style={styles.header}>
         <View style={styles.headerLeft}>
           <Image source={logo} style={styles.logo} />
@@ -58,12 +55,10 @@ const ShopScreen = ({ route, navigation }) => {
         </TouchableOpacity>
       </View>
 
-      {/* Deuxième ligne */}
       <View style={styles.searchBarContainer}>
         <CustomSearchBar />
       </View>
 
-      {/* Contenu de la liste de produits */}
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         {products.map((product) => (
           <ProductCard
@@ -78,7 +73,6 @@ const ShopScreen = ({ route, navigation }) => {
         ))}
       </ScrollView>
 
-      {/* Barre de navigation en bas */}
       <CustomNavBar navigation={navigation} screen="HomeScreen" />
     </View>
   );

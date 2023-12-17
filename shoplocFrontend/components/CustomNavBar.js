@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
         bottom: 0, 
         zIndex: 1, 
       },    
+
     navText: {
       color: 'white',
       fontSize: 16,

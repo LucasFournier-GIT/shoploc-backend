@@ -9,13 +9,13 @@ import ShopCard from "../ShopCard";
 import logo from "./../../assets/logo.png";
 import colors from "./../../assets/colors";
 import { useContext, useEffect, useState } from "react";  
-import { AuthContext } from "../AuthContext";
+
+import { AuthContext } from "./../AuthContext";
 
 const HomeScreen = ({ navigation }) => {
 
     const [shops, setShops] = useState([]);
     const { token, updateToken } = useContext(AuthContext);
-
 
     useEffect(() => {
       const fetchShopData = async () => {

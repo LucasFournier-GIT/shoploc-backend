@@ -34,8 +34,8 @@ const CartScreen = ({ navigation }) => {
     };
 
     fetchUserCarts();
-  }, []); // Assurez-vous de passer les dépendances appropriées si nécessaire
 
+  }, []); // Assurez-vous de passer les dépendances appropriées si nécessaire
 
       const handleValidateAll = () => {
         const totalAmount = userCarts.reduce((acc, store) => {
@@ -97,9 +97,9 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
       position: 'absolute',
-      bottom: 85, // Modifier cette valeur pour ajuster la position du conteneur du bouton
+      bottom: 85, 
       width: '100%',
-      alignItems: 'center', // Centrer horizontalement le bouton dans son conteneur
+      alignItems: 'center',
       
     },
   });
