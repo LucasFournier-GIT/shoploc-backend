@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/product_in_cart")
+@RequestMapping("/api/product_in_cart")
 public class ProductInCartController {
 
     private final ProductInCartService productInCartService;
@@ -28,7 +28,7 @@ public class ProductInCartController {
         }
     }
 
-    @PostMapping("/remove/{idProduct}")
+    @DeleteMapping("/remove/{idProduct}")
     public ResponseEntity<String> removeProductToCart(
             @PathVariable(name = "idProduct") Long idProduct, @RequestHeader("Authorization") String authorizationHeader){
         String token = authorizationHeader.substring(7);
