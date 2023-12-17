@@ -16,7 +16,6 @@ const HomeScreen = ({ navigation }) => {
     const [shops, setShops] = useState([]);
     const { token, updateToken } = useContext(AuthContext);
 
-
     useEffect(() => {
       const fetchShopData = async () => {
         try {

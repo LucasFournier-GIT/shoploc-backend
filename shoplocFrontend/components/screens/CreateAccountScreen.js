@@ -5,6 +5,7 @@ import { useContext, useState } from 'react';
 import colors from "./../../assets/colors";
 import { useEffect } from 'react';
 import { AuthContext } from '../AuthContext';
+import CustomModal from '../CustomModal';
 
 const CreateAccountScreen = ({navigation}) => {
 
@@ -19,6 +20,8 @@ const CreateAccountScreen = ({navigation}) => {
   const [confMdp, setConfMdp] = useState('');
   const [immatriculation, setImmatriculation] = useState('');
   const [token, setToken] = useState('');
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalText, setModalText] = useState('');
 
   const handleChangeNom = (value) => { 
     console.log("HELLO0");
@@ -30,41 +33,42 @@ const CreateAccountScreen = ({navigation}) => {
   const handleChangeConfMdp = (value) => { setConfMdp(value); };
   const handleChangeImmatriculation = (value) => { setImmatriculation(value); };
 
-    // Fonction pour envoyer la requête d'inscription
-    const handleCreateAccount = async () => {
-
-
-      if (mdp === confMdp) {
-        try {
-          const response = await fetch('http://localhost:8080/api/auth/register', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              email: mail,
-              password: mdp,
-            }),
-          });
+  const handleCreateAccount = async () => {
+    if (mdp === confMdp) {
+      try {
+        const response = await fetch('http://localhost:8080/api/auth/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: mail,
+            password: mdp,
+          }),
+        });
+  
+        if (response.status === 409) {
+          setModalText("Cet utilisateur existe déjà");
+          setIsModalVisible(true);
+        } else if (response.ok) {
           const data = await response.json();
-
           setToken(data.token);
           updateToken(data.token);
           navigation.navigate('HomeScreen');
-
-        } catch (error) { 
-          console.error('Erreur lors de l\'inscription : ', error);
+        } else {
+          setModalText("Erreur lors de l'inscription");
+          setIsModalVisible(true);
         }
+      } catch (error) {
+        setModalText("Erreur lors de l'inscription: " + error);
+        setIsModalVisible(true);
       }
-      console.log(nom);
-      console.log(prenom);
-      console.log(mail);
-      console.log(mdp);
-      //console.log(immatriculation);
-      console.log(token);
-    
-    };
-
+    } else {
+      setModalText("Les mots de passe saisis ne correspondent pas");
+      setIsModalVisible(true);
+    }
+  };
+  
     // Effectue la requête lorsque le token change
     useEffect(() => {
       if (token) {
@@ -91,6 +95,12 @@ const CreateAccountScreen = ({navigation}) => {
           <Text style={styles.footer}>
               ShopLoc by SEQI
           </Text>
+          <CustomModal
+          isVisible={isModalVisible}
+          modalText={modalText}
+          onClose={() => setIsModalVisible(false)}
+          >
+          </CustomModal>
         </View>
       </View>
     )

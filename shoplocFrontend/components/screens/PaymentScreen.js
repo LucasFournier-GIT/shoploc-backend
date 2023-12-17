@@ -5,6 +5,7 @@ import CustomInput from '../CustomInput';
 import CustomButton from '../CustomButton';
 import logo from './../../assets/logo.png';
 import colors from "./../../assets/colors";
+import CustomModal from '../CustomModal';
 
 const PaymentScreen = ({ navigation, TotalAmount }) => {
   const [paymentOption, setPaymentOption] = useState(TotalAmount);
@@ -71,20 +72,11 @@ const PaymentScreen = ({ navigation, TotalAmount }) => {
 
 
       </View>
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={isModalVisible}
-        onRequestClose={() => setIsModalVisible(false)}
-        >
-        <View style={styles.modalContainer}>
-            <View style={styles.modalContent}>
-            <Text style={styles.modalText}>Le paiement a bien été effectué</Text>
-            
-            <CustomButton text={"Fermer"} onPress={() => setIsModalVisible(false)}/>
-            </View>
-        </View>
-      </Modal>
+      <CustomModal
+        isVisible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+        modalText={"Le paiement a bien été effectué"}
+      />
       <CustomNavBar navigation={navigation} screen="CartScreen" />
 
     </View>
