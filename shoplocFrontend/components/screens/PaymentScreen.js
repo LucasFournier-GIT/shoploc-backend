@@ -5,7 +5,7 @@ import CustomInput from '../CustomInput';
 import CustomButton from '../CustomButton';
 import logo from './../../assets/logo.png';
 import colors from "./../../assets/colors";
-import CustomModal from '../CustomModal';
+import CustomModal from './../CustomModal';
 
 const PaymentScreen = ({ navigation, TotalAmount }) => {
   const [paymentOption, setPaymentOption] = useState(TotalAmount);
