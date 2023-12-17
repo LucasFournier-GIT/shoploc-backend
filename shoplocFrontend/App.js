@@ -10,13 +10,14 @@ import ShopScreen from './components/screens/ShopScreen';
 import CartScreen from './components/screens/CartScreen';
 import PaymentScreen from './components/screens/PaymentScreen';
 import RecapCart from './components/screens/RecapCartScreen';
+import { AuthProvider } from './components/AuthContext';
 
 const Stack = createStackNavigator();
 
 export default function App() {
 
   return (
-
+    <AuthProvider>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="LoginScreen">
           <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }}/>
@@ -29,5 +30,6 @@ export default function App() {
 
         </Stack.Navigator>
       </NavigationContainer>
+    </AuthProvider>
   );
 }
