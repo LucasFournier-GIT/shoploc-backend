@@ -65,7 +65,7 @@ class ProductTests {
     void getAllProductsByShopId_shouldReturnProductsForShop() {
         Long shopId = 1L;
         List<Product> expectedProducts = new ArrayList<>();
-        when(productRepository.findAllByIdMagasin(shopId)).thenReturn(expectedProducts);
+        when(productRepository.findAllByShopId(shopId)).thenReturn(expectedProducts);
 
         List<Product> actualProducts = productService.getAllProductsByShopId(shopId);
 
