@@ -4,6 +4,8 @@ import fr.shoploc.shoplocBackend.common.models.Product;
 import fr.shoploc.shoplocBackend.common.models.ProductInCart;
 import fr.shoploc.shoplocBackend.common.models.Shop;
 import fr.shoploc.shoplocBackend.config.JwtService;
+import fr.shoploc.shoplocBackend.dto.ProductDTO;
+import fr.shoploc.shoplocBackend.dto.ShopDTO;
 import fr.shoploc.shoplocBackend.productInCart.repository.ProductInCartRepository;
 import fr.shoploc.shoplocBackend.product.controller.ProductController;
 import fr.shoploc.shoplocBackend.shop.controller.ShopController;
@@ -40,27 +42,34 @@ public class ProductInCartService {
         productInCartRepository.deleteByProductIdAndUserId(idProduct, userId);
     }
 
-    public Map<Shop, List<HashMap<Product, Integer>>> getCarts(String token) throws Exception {
+    public List<ShopDTO> getCarts(String token) throws Exception {
         Long userId = getUserId(token);
 
         List<ProductInCart> productInCartList = productInCartRepository.findAllByIdUser(userId);
 
-        Map<Shop, List<HashMap<Product, Integer>>> cartsByShop = new HashMap<>();
-
+        Map<Long, ShopDTO> cartsByShop = new HashMap<>();
         for (ProductInCart productInCart : productInCartList) {
             Product product = productController.getProductById(productInCart.getIdProduct());
-            Long shopId = product.getIdMagasin();
+            Long shopId = product.getShopId();
             Shop shop = shopController.getShopById(shopId).get();
 
-            HashMap<Product, Integer> productsWithQuantity = new HashMap<>();
-            productsWithQuantity.put(product, productInCart.getQuantity());
+            ProductDTO productDTO = new ProductDTO();
+            productDTO.setProductName(product.getName());
+            productDTO.setPrice(product.getPrice());
+            productDTO.setQuantity(productInCart.getQuantity());
+            productDTO.setImageUrl(product.getImageUrl());
 
-            List<HashMap<Product, Integer>> shopCarts = cartsByShop.computeIfAbsent(shop, k -> new ArrayList<>());
-
-            shopCarts.add(productsWithQuantity);
+            ShopDTO shopDTO = cartsByShop.get(shopId);
+            if (shopDTO == null) {
+                shopDTO = new ShopDTO();
+                shopDTO.setId(shop.getId());
+                shopDTO.setShopName(shop.getName());
+                cartsByShop.put(shopId, shopDTO);
+            }
+            shopDTO.getProducts().add(productDTO);
         }
 
-        return cartsByShop;
+        return new ArrayList<>(cartsByShop.values());
     }
 
 
