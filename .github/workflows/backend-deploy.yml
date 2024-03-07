@@ -19,6 +19,6 @@ jobs:
       - name: Deploy Backend to Heroku
         run: |
           echo "Deploying Backend to Heroku..."
-          heroku login
+          heroku login --api-key ${{ secrets.HEROKU_API_KEY }}
           heroku deploy --app shoploc --app-dir shoplocBackend
 
