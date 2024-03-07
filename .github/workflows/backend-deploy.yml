@@ -12,6 +12,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v2
         with:
+          distribution: 'temurin'
           java-version: 21
       - name: Build Backend
         run: mvn clean install -f shoplocBackend/pom.xml
