@@ -1,10 +1,12 @@
 package fr.shoploc.shoplocBackend.productInCart.controller;
 
+import fr.shoploc.shoplocBackend.dto.ShopDTO;
 import fr.shoploc.shoplocBackend.productInCart.service.ProductInCartService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/product_in_cart")
@@ -24,6 +26,7 @@ public class ProductInCartController {
             productInCartService.addProductToCart(idProduct, token);
             return ResponseEntity.ok("Produit ajouté au panier.");
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
@@ -36,17 +39,19 @@ public class ProductInCartController {
             productInCartService.removeProductToCart(idProduct, token);
             return ResponseEntity.ok("Produit retiré du panier.");
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
     @GetMapping
-    public ResponseEntity<Object> getProductsInCart(@RequestHeader("Authorization") String authorizationHeader){
+    public ResponseEntity<List<ShopDTO>> getProductsInCart(@RequestHeader("Authorization") String authorizationHeader){
         String token = authorizationHeader.substring(7);
         try {
             return ResponseEntity.ok().body(productInCartService.getCarts(token));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 }

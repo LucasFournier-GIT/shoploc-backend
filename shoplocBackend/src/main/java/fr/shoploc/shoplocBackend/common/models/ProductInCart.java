@@ -4,10 +4,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+@Entity
+@Table(name = "products_in_cart")
 @Getter
 @Setter
-@Entity
-@Table(name = "productsInCart")
 public class ProductInCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -26,7 +26,7 @@ public class ProductService {
     }
 
     public List<Product> getAllProductsByShopId(Long shopId) {
-        return productRepository.findAllByIdMagasin(shopId);
+        return productRepository.findAllByShopId(shopId);
 
     }
 }
