@@ -24,4 +24,4 @@ jobs:
       - name: Build with Maven
         run: |
           cd shoplocBackend  # Change to your project directory
-          mvn -B package -Pci -Dspring.config.location=classpath:/application-ci.properties
+          mvn -B package
