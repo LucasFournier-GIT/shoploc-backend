@@ -28,7 +28,6 @@ const ShopScreen = ({ route, navigation }) => {
           return res.json(); 
         }).then((data)=>{
           setProducts(data);
-          console.log("THE DATA", data);
         });
 
       } catch (error) {
@@ -56,7 +55,7 @@ const ShopScreen = ({ route, navigation }) => {
       </View>
 
       <View style={styles.searchBarContainer}>
-        <CustomSearchBar />
+        <CustomSearchBar placeholder={"Chercher un produit..."}/>
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -68,7 +67,7 @@ const ShopScreen = ({ route, navigation }) => {
             description={product.description}
             imageUrl={product.image}
             navigation={navigation}
-            id={product.id}
+            productId={product.id}
           />
         ))}
       </ScrollView>

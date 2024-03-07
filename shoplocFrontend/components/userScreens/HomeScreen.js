@@ -1,15 +1,13 @@
 import { Image, StatusBar, View } from "react-native";
-import CustomNavBar from "./../CustomNavBar";
-import CustomSearchBar from "./../CustomSearchBar"
+import CustomNavBar from "../CustomNavBar";
+import CustomSearchBar from "../CustomSearchBar"
 import { StyleSheet } from "react-native";
-import { Text } from "react-native";
-import { SearchBar } from 'react-native-elements';
 import { ScrollView } from "react-native";
 import ShopCard from "../ShopCard";
 import logo from "./../../assets/logo.png";
-import colors from "./../../assets/colors";
+import colors from "../../assets/colors";
 import { useContext, useEffect, useState } from "react";  
-import { AuthContext } from "./../AuthContext";
+import { AuthContext } from "../AuthContext";
 
 const HomeScreen = ({ navigation }) => {
 
@@ -51,7 +49,7 @@ const HomeScreen = ({ navigation }) => {
             />
             <View style={styles.head} >
               <Image source={logo} style={styles.logo} />
-              <CustomSearchBar></CustomSearchBar>
+              <CustomSearchBar placeholder={"Chercher un produit..."}></CustomSearchBar>
             </View>
             <ScrollView contentContainerStyle={styles.scrollViewContent}>
                 {shops.map((shop) => (

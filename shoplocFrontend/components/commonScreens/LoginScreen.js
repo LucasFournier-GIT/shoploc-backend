@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import CustomInput from '../CustomInput';
 import CustomButton from '../CustomButton';
 import { useNavigation } from '@react-navigation/native';
-import colors from "./../../assets/colors";
+import colors from "../../assets/colors";
 import { AuthContext } from '../AuthContext';
 import { Modal } from 'react-native';
 import CustomModal from '../CustomModal';
@@ -42,9 +42,12 @@ const LoginScreen = ({ navigation }) => {
         setToken(receivedToken);
         updateToken(receivedToken);
         console.log('Token reçu : ', receivedToken);
-        navigation.navigate('HomeScreen');
+        if(email.startsWith("shop")){
+          navigation.navigate("ShopHomeScreen")
+        }
+        navigation.navigate('ShopHomeScreen');
       }else if (response.status === 403) {
-        setIsModalVisible(true); 
+        setIsModalVisible(true);
       }else {
         console.error('La requête a échoué');
       }

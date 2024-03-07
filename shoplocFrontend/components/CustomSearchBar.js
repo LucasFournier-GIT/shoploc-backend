@@ -1,11 +1,11 @@
 import { View, TextInput, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import colors from "./../assets/colors";
-const SearchBar = () => {
+const SearchBar = ({placeholder}) => {
     return (
         <View style={styles.searchContainer}>
             <TextInput
-                placeholder="Chercher un produit..."
+                placeholder={placeholder}
                 placeholderTextColor={colors.light}
                 style={styles.input}
             />

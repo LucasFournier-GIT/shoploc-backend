@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import CustomInput from '../CustomInput';
 import CustomButton from '../CustomButton';
 import { useContext, useState } from 'react';
-import colors from "./../../assets/colors";
+import colors from "../../assets/colors";
 import { useEffect } from 'react';
 import { AuthContext } from '../AuthContext';
 import CustomModal from '../CustomModal';
@@ -54,7 +54,13 @@ const CreateAccountScreen = ({navigation}) => {
           const data = await response.json();
           setToken(data.token);
           updateToken(data.token);
-          navigation.navigate('HomeScreen');
+          if(mail.startsWith("shop")){
+            navigation.navigate("ShopHomeScreen");
+            //TODO Change the condition 
+          }else{
+            navigation.navigate('HomeScreen');
+          }
+          
         } else {
           setModalText("Erreur lors de l'inscription");
           setIsModalVisible(true);

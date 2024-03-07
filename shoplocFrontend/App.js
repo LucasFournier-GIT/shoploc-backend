@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import LoginScreen from './components/screens/LoginScreen';
-import CreateAccountScreen from './components/screens/CreateAccountScreen';
+import LoginScreen from './components/commonScreens/LoginScreen';
+import CreateAccountScreen from './components/commonScreens/CreateAccountScreen';
 import { StatusBar, View } from 'react-native';
 import { AppLoading } from 'expo';
-import Homescreen from './components/screens/HomeScreen';
-import ShopScreen from './components/screens/ShopScreen';
-import CartScreen from './components/screens/CartScreen';
-import PaymentScreen from './components/screens/PaymentScreen';
-import RecapCart from './components/screens/RecapCartScreen';
+import Homescreen from './components/userScreens/HomeScreen';
+import ShopScreen from './components/userScreens/ShopScreen';
+import CartScreen from './components/userScreens/CartScreen';
+import PaymentScreen from './components/userScreens/PaymentScreen';
+import RecapCart from './components/userScreens/RecapCartScreen';
 import { AuthProvider } from './components/AuthContext';
+import ShopHomeScreen from './components/shopScreens/ShopHomeScreen';
 
 const Stack = createStackNavigator();
 
@@ -27,7 +28,7 @@ export default function App() {
           <Stack.Screen name="CartScreen" component={CartScreen} options={{headerShown: false}} />
           <Stack.Screen name="RecapCartScreen" component={RecapCart} options={{headerShown: false}} />
           <Stack.Screen name="PaymentScreen" component={PaymentScreen} options={{headerShown: false}} />
-
+          <Stack.Screen name="ShopHomeScreen" component={ShopHomeScreen} options={{headerShown: false}} />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>

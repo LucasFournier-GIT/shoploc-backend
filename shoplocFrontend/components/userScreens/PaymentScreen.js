@@ -3,8 +3,8 @@ import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import CustomNavBar from '../CustomNavBar';
 import CustomInput from '../CustomInput';
 import CustomButton from '../CustomButton';
-import colors from './../../assets/colors';
-import CustomModal from './../CustomModal';
+import colors from '../../assets/colors';
+import CustomModal from '../CustomModal';
 
 const PaymentScreen = ({ navigation, TotalAmount }) => {
   const [paymentOption, setPaymentOption] = useState(TotalAmount);

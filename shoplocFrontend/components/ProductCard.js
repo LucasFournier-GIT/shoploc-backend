@@ -1,15 +1,49 @@
-import React, { useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import colors  from './../assets/colors';
+import {AuthContext} from "./AuthContext";
 
-const ProductCard = ({ navigation, name, id, quantity, description, imageUrl }) => {
+const ProductCard = ({ navigation, name, productId, quantity, description, imageUrl }) => {
   const [cartQuantity, setCartQuantity] = useState(0);
+  const { token } = useContext(AuthContext);
 
   const handleAddToCart = () => {
+    console.log("Token depuis product card : ")
+    console.log(token)
+    const fetchShopData = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/api/product_in_cart/add/${productId}`, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+      } catch (error) {
+        console.error('Erreur lors de la requête : ', error);
+      }
+    };
+
+    fetchShopData();
     setCartQuantity(cartQuantity + 1);
   };
 
   const handleRemoveFromCart = () => {
+    const fetchShopData = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/api/product_in_cart/remove/${productId}`, {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+      } catch (error) {
+        console.error('Erreur lors de la requête : ', error);
+      }
+    };
+
+    fetchShopData();
     if (cartQuantity > 0) {
       setCartQuantity(cartQuantity - 1);
     }
