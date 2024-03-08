@@ -21,8 +21,10 @@ jobs:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: |
           echo "Deploying Backend to Heroku..."
+          wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
           heroku plugins:install @heroku-cli/plugin-manifest
           heroku plugins:install @heroku-cli/plugin-manifest
           heroku authorizations:create --description "GitHub Actions" | grep "token" | cut -d '"' -f 4 > apikey.txt
           heroku config:set HEROKU_API_KEY=$(cat apikey.txt)
-          heroku deploy:jar shoplocBackend/target/*.jar --app shoploc
+          heroku git:remote --app shoploc
+          git push heroku main:main -f
