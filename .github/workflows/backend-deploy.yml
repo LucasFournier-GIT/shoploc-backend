@@ -25,4 +25,4 @@ jobs:
           heroku plugins:install @heroku-cli/plugin-manifest
           heroku authorizations:create --description "GitHub Actions" | grep "token" | cut -d '"' -f 4 > apikey.txt
           heroku config:set HEROKU_API_KEY=$(cat apikey.txt)
-          heroku deploy --app shoploc --app-dir shoplocBackend
+          heroku deploy:jar shoplocBackend/target/*.jar --app shoploc
