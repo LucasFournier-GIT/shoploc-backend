@@ -1,4 +1,4 @@
-FROM openjdk:21
+FROM maven:3.9.2-jdk-21
 
 WORKDIR /app
 
