@@ -4,9 +4,10 @@ WORKDIR /app
 
 RUN apk add --no-cache ca-certificates maven
 
+COPY pom.xml .
+
 RUN mvn clean install
 
-COPY pom.xml .
 COPY target/*.jar app/
 
 CMD ["java", "-jar", "app/app.jar"]
