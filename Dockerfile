@@ -1,5 +1,5 @@
 # Utilise l'image de base de Java 21
-FROM openjdk:21-slim-alpine
+FROM adoptopenjdk/openjdk21:alpine
 
 # Définis le répertoire de travail dans le conteneur
 WORKDIR /app
