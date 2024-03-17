@@ -1,8 +1,8 @@
-FROM maven:3.9.2-jdk-21
+FROM eclipse-temurin:21-jdk-alpine
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y maven
+RUN apk add --no-cache maven
 
 RUN mvn clean install
 
