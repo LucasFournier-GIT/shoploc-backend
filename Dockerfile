@@ -1,11 +1,9 @@
-# Utilise l'image de base de Java 21
 FROM openjdk:21
 
-# Définis le répertoire de travail dans le conteneur
 WORKDIR /app
 
-# Copie le jar de ton application dans le conteneur
+RUN mvn clean install
+
 COPY target/*.jar app.jar
 
-# Commande à exécuter lorsque le conteneur démarre
 CMD ["java", "-jar", "app.jar"]
