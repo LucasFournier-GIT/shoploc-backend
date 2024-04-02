@@ -60,7 +60,7 @@ public class ProductInCartServiceTest {
         productInCartService.removeProductToCart(idProduct, token);
 
         // Assert
-        verify(productInCartRepository, times(1)).deleteByProductIdAndUserId(eq(idProduct), eq(user.getId()));
+        verify(productInCartRepository, times(1)).deleteByIdProductAndIdUser(eq(idProduct), eq(user.getId()));
     }
 
     // TODO: Add test for getCarts

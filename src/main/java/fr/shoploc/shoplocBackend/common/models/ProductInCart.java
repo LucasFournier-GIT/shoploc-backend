@@ -20,6 +20,7 @@ public class ProductInCart {
     public ProductInCart(Long idProduct, Long idUser){
         this.idUser = idUser;
         this.idProduct = idProduct;
+        this.quantity = 1;
     }
 
     public ProductInCart(){}

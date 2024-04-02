@@ -16,5 +16,8 @@ public interface ProductInCartRepository extends JpaRepository<ProductInCart, Lo
     @Transactional
     @Modifying
     @Query("DELETE FROM ProductInCart WHERE idProduct = :productId AND idUser = :userId")
-    void deleteByProductIdAndUserId(@Param("productId") Long productId, @Param("userId") Long userId);
+    void deleteByIdProductAndIdUser(@Param("productId") Long productId, @Param("userId") Long userId);
+
+    @Transactional
+    List<ProductInCart> findByIdUserAndIdProduct(Long userId, Long idProduct);
 }
