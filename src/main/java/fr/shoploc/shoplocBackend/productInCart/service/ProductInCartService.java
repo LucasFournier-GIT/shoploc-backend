@@ -33,13 +33,22 @@ public class ProductInCartService {
     }
     public void addProductToCart(Long idProduct, String token) throws Exception {
         Long userId = getUserId(token);
-        ProductInCart productInCart = new ProductInCart(idProduct, userId);
+
+        List<ProductInCart> existingProductInCart = productInCartRepository.findByIdUserAndIdProduct(userId, idProduct);
+
+        ProductInCart productInCart;
+        if (!existingProductInCart.isEmpty()) {
+            productInCart = existingProductInCart.get(0);
+            productInCart.setQuantity(productInCart.getQuantity() + 1);
+        } else {
+            productInCart = new ProductInCart(idProduct, userId);
+        }
         productInCartRepository.save(productInCart);
     }
 
     public void removeProductToCart(Long idProduct, String token) throws Exception {
         Long userId = getUserId(token);
-        productInCartRepository.deleteByProductIdAndUserId(idProduct, userId);
+        productInCartRepository.deleteByIdProductAndIdUser(idProduct, userId);
     }
 
     public List<ShopDTO> getCarts(String token) throws Exception {
@@ -51,9 +60,15 @@ public class ProductInCartService {
         for (ProductInCart productInCart : productInCartList) {
             Product product = productController.getProductById(productInCart.getIdProduct());
             Long shopId = product.getShopId();
+
+            if (shopController.getShopById(shopId).isEmpty()) {
+                throw new Exception("Magasin introuvable.");
+            }
+
             Shop shop = shopController.getShopById(shopId).get();
 
             ProductDTO productDTO = new ProductDTO();
+            productDTO.setId(product.getId());
             productDTO.setProductName(product.getName());
             productDTO.setPrice(product.getPrice());
             productDTO.setQuantity(productInCart.getQuantity());
