@@ -20,4 +20,8 @@ public interface ProductInCartRepository extends JpaRepository<ProductInCart, Lo
 
     @Transactional
     List<ProductInCart> findByIdUserAndIdProduct(Long userId, Long idProduct);
+
+    @Query("SELECT p FROM ProductInCart p WHERE p.idProduct IN :productIds")
+    List<ProductInCart> findByIdProductIn(@Param("productIds") List<Long> productIds);
+
 }

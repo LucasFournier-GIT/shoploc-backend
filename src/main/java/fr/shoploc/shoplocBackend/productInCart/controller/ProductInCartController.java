@@ -1,12 +1,9 @@
 package fr.shoploc.shoplocBackend.productInCart.controller;
 
-import fr.shoploc.shoplocBackend.dto.ShopDTO;
 import fr.shoploc.shoplocBackend.productInCart.service.ProductInCartService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/product_in_cart")
@@ -45,13 +42,13 @@ public class ProductInCartController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ShopDTO>> getProductsInCart(@RequestHeader("Authorization") String authorizationHeader){
+    public ResponseEntity<Object> getProductsInCart(@RequestHeader("Authorization") String authorizationHeader){
         String token = authorizationHeader.substring(7);
         try {
-            return ResponseEntity.ok().body(productInCartService.getCarts(token));
+            return ResponseEntity.ok().body(productInCartService.getUserCarts(token));
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 }
