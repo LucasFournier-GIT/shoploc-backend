@@ -15,6 +15,7 @@ public class ProductInCart {
 
     private Long idUser;
     private Long idProduct;
+    private Long idOrder;
     private int quantity;
 
     public ProductInCart(Long idProduct, Long idUser){

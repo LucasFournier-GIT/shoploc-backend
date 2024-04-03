@@ -8,12 +8,13 @@ import java.util.List;
 
 @Getter
 @Setter
-public class ShopDTO {
+public class CartDTO {
     private Long id;
+    private Long shopId;
     private String shopName;
     private List<ProductDTO> products;
 
-    public ShopDTO() {
+    public CartDTO() {
         this.products = new ArrayList<>();
     }
 
