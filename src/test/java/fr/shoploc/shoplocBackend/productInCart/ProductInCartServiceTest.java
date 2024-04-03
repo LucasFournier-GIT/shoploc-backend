@@ -4,6 +4,7 @@ import fr.shoploc.shoplocBackend.common.models.ProductInCart;
 import fr.shoploc.shoplocBackend.config.JwtService;
 import fr.shoploc.shoplocBackend.productInCart.repository.ProductInCartRepository;
 import fr.shoploc.shoplocBackend.productInCart.service.ProductInCartService;
+import fr.shoploc.shoplocBackend.common.methods.Common;
 import fr.shoploc.shoplocBackend.usermanager.user.User;
 import fr.shoploc.shoplocBackend.usermanager.user.UserService;
 import org.junit.jupiter.api.Test;
@@ -30,6 +31,9 @@ public class ProductInCartServiceTest {
 
     @Mock
     private UserService userService;
+
+    @Mock
+    private Common common;
 
     @Test
     public void addProductToCart_addsProductToCart() throws Exception {
@@ -75,7 +79,7 @@ public class ProductInCartServiceTest {
         when(userService.findUserByEmail("test@test.com")).thenReturn(Optional.of(user));
 
         // Act
-        Long result = productInCartService.getUserId(token);
+        Long result = common.getUserId(token);
 
         // Assert
         assertEquals(1L, result);
@@ -89,6 +93,6 @@ public class ProductInCartServiceTest {
         when(userService.findUserByEmail("test@test.com")).thenReturn(Optional.empty());
 
         // Act and Assert
-        assertThrows(Exception.class, () -> productInCartService.getUserId(token));
+        assertThrows(Exception.class, () -> common.getUserId(token));
     }
 }
