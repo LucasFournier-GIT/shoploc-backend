@@ -3,6 +3,8 @@ package fr.shoploc.shoplocBackend.product.controller;
 import fr.shoploc.shoplocBackend.common.models.Product;
 import fr.shoploc.shoplocBackend.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,8 +32,16 @@ public class ProductController {
 
     @GetMapping("/shop/{shopId}")
     public List<Product> getProductsByShopId(@PathVariable Long shopId) {
-        List<Product> products = productService.getAllProductsByShopId(shopId);
-        return products;
+        return productService.getAllProductsByShopId(shopId);
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> updateProduct(@PathVariable Long id, @RequestBody Product product) {
+        try {
+            return ResponseEntity.ok(productService.updateProduct(id, product));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 }
