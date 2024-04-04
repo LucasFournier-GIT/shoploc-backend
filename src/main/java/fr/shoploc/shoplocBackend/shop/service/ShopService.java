@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import fr.shoploc.shoplocBackend.common.models.Shop;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ShopService {
@@ -21,7 +20,7 @@ public class ShopService {
         return shopRepository.findAll();
     }
 
-    public Optional<Shop> getShopById(Long id) {
-        return shopRepository.findById(id);
+    public Shop getShopById(Long id) {
+        return shopRepository.findById(id).orElse(null);
     }
 }

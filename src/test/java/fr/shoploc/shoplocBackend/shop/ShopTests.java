@@ -40,10 +40,10 @@ class ShopSTest {
         Shop expectedShop = new Shop();
         when(shopRepository.findById(shopId)).thenReturn(Optional.of(expectedShop));
 
-        Optional<Shop> actualShop = shopService.getShopById(shopId);
+        Shop actualShop = shopService.getShopById(shopId);
 
-        assertTrue(actualShop.isPresent());
-        assertEquals(expectedShop, actualShop.get());
+        assertNotNull(actualShop);
+        assertEquals(expectedShop, actualShop);
     }
 
     @Test
@@ -51,8 +51,8 @@ class ShopSTest {
         Long shopId = 1L;
         when(shopRepository.findById(shopId)).thenReturn(Optional.empty());
 
-        Optional<Shop> actualShop = shopService.getShopById(shopId);
+        Shop actualShop = shopService.getShopById(shopId);
 
-        assertTrue(actualShop.isEmpty());
+        assertNull(actualShop);
     }
 }
