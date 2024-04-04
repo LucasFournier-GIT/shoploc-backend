@@ -52,4 +52,13 @@ public class ShopController {
         return shops;
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<Object> updateShop(@PathVariable Long id, @RequestBody Shop shop) {
+        try {
+            return ResponseEntity.ok(shopService.updateShop(id, shop));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
 }
