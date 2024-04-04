@@ -2,13 +2,14 @@ package fr.shoploc.shoplocBackend.shop.controller;
 
 import jakarta.annotation.security.PermitAll;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import fr.shoploc.shoplocBackend.common.models.Shop;
 import fr.shoploc.shoplocBackend.shop.service.ShopService;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @PermitAll
@@ -35,9 +36,12 @@ public class ShopController {
 
     // Endpoint pour avoir un magasin depuis son id
     @GetMapping("/{id}")
-    public Optional<Shop> getShopById(@PathVariable Long id) {
-        Optional<Shop> shop = shopService.getShopById(id);
-        return shop;
+    public ResponseEntity<Object> getShopById(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(shopService.getShopById(id));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
     // Endpoint pour avoir la liste de tous les magasins

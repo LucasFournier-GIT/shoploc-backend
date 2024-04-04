@@ -9,7 +9,7 @@ import fr.shoploc.shoplocBackend.dto.CartDTO;
 import fr.shoploc.shoplocBackend.product.repository.ProductRepository;
 import fr.shoploc.shoplocBackend.productInCart.repository.ProductInCartRepository;
 import fr.shoploc.shoplocBackend.product.controller.ProductController;
-import fr.shoploc.shoplocBackend.shop.controller.ShopController;
+import fr.shoploc.shoplocBackend.shop.service.ShopService;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -21,14 +21,14 @@ public class ProductInCartService {
     private final ProductRepository productRepository;
     private final ProductController productController;
     private final Common common;
-    private final ShopController shopController;
+    private final ShopService shopService;
 
-    public ProductInCartService(ProductInCartRepository productInCartRepository, ProductRepository productRepository, ProductController productController, Common common, ShopController shopController){
+    public ProductInCartService(ProductInCartRepository productInCartRepository, ProductRepository productRepository, ProductController productController, Common common, ShopService shopService){
         this.productInCartRepository = productInCartRepository;
         this.productRepository = productRepository;
         this.productController = productController;
         this.common = common;
-        this.shopController = shopController;
+        this.shopService = shopService;
     }
     public void addProductToCart(Long idProduct, String token) throws Exception {
         Long userId = common.getUserId(token);
@@ -83,11 +83,7 @@ public class ProductInCartService {
             Product product = productController.getProductById(productInCart.getIdProduct());
             Long shopId = product.getShopId();
 
-            Optional<Shop> optionalShop = shopController.getShopById(shopId);
-            if (optionalShop.isEmpty()) {
-                throw new Exception("Magasin introuvable.");
-            }
-            Shop shop = optionalShop.get();
+            Shop shop = shopService.getShopById(shopId);
 
             ProductDTO productDTO = new ProductDTO();
             productDTO.setId(product.getId());
