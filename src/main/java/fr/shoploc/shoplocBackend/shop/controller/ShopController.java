@@ -2,6 +2,8 @@ package fr.shoploc.shoplocBackend.shop.controller;
 
 import jakarta.annotation.security.PermitAll;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import fr.shoploc.shoplocBackend.common.models.Shop;
@@ -48,4 +50,13 @@ public class ShopController {
         return shops;
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<Object> updateShop(@PathVariable Long id, @RequestBody Shop shop) {
+        try {
+            return ResponseEntity.ok(shopService.updateShop(id, shop));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import fr.shoploc.shoplocBackend.common.models.Shop;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,5 +24,20 @@ public class ShopService {
 
     public Optional<Shop> getShopById(Long id) {
         return shopRepository.findById(id);
+    }
+
+    public Shop updateShop(Long id, Shop shop) throws Exception {
+        Shop shopToUpdate = shopRepository.findById(id).orElse(null);
+        if (shopToUpdate != null) {
+            for (Field field : Shop.class.getDeclaredFields()) {
+                field.setAccessible(true);
+                Object newValue = field.get(shop);
+                if (newValue != null) {
+                    field.set(shopToUpdate, newValue);
+                }
+            }
+            return shopRepository.save(shopToUpdate);
+        }
+        throw new Exception("Product not found");
     }
 }
