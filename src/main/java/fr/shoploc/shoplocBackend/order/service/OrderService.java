@@ -71,4 +71,13 @@ public class OrderService {
             return orderDTO;
         }).collect(Collectors.toList());
     }
+
+    public void deleteOrder(Long idOrder, String token) throws Exception {
+        Long shopId = common.getUserId(token);
+        Order order = orderRepository.findById(idOrder).orElseThrow(() -> new RuntimeException("Commande non trouvée."));
+        if (!order.getShopId().equals(shopId)) {
+            throw new RuntimeException("Vous n'êtes pas autorisé à supprimer cette commande.");
+        }
+        orderRepository.deleteById(idOrder);
+    }
 }
