@@ -13,6 +13,7 @@ import fr.shoploc.shoplocBackend.shop.controller.ShopController;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductInCartService {
@@ -108,4 +109,12 @@ public class ProductInCartService {
         }
         return new ArrayList<>(cartsByShop.values());
     }
+
+    public List<CartDTO> getShopCartsForUser(String token, Long shopId) throws Exception {
+    List<CartDTO> allCarts = getUserCarts(token);
+
+        return allCarts.stream()
+        .filter(cart -> cart.getShopId().equals(shopId))
+        .collect(Collectors.toList());
+}
 }

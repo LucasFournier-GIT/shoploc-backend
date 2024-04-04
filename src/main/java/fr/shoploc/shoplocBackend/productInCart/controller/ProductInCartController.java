@@ -51,4 +51,15 @@ public class ProductInCartController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
+
+    @GetMapping("/shop/{idShop}")
+    public ResponseEntity<Object> getProductsInCart(@PathVariable(name = "idShop") Long idShop, @RequestHeader("Authorization") String authorizationHeader){
+        String token = authorizationHeader.substring(7);
+        try {
+            return ResponseEntity.ok().body(productInCartService.getShopCartsForUser(token, idShop));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
 }
