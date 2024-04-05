@@ -37,6 +37,6 @@ public class ShopService {
             }
             return shopRepository.save(shopToUpdate);
         }
-        throw new Exception("Product not found");
+        throw new Exception("Shop not found");
     }
 }

@@ -4,17 +4,16 @@ import fr.shoploc.shoplocBackend.common.methods.Common;
 import fr.shoploc.shoplocBackend.common.models.Order;
 import fr.shoploc.shoplocBackend.common.models.Product;
 import fr.shoploc.shoplocBackend.common.models.ProductInCart;
-import fr.shoploc.shoplocBackend.dto.OrderDTO;
-import fr.shoploc.shoplocBackend.dto.ProductDTO;
+import fr.shoploc.shoplocBackend.common.models.Shop;
+import fr.shoploc.shoplocBackend.dto.*;
 import fr.shoploc.shoplocBackend.order.repository.OrderRepository;
 import fr.shoploc.shoplocBackend.product.repository.ProductRepository;
+import fr.shoploc.shoplocBackend.productInCart.repository.ProductInCartRepository;
 import fr.shoploc.shoplocBackend.productInCart.service.ProductInCartService;
+import fr.shoploc.shoplocBackend.shop.repository.ShopRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,15 +22,19 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
     private final ProductInCartService productInCartService;
+    private final ShopRepository shopRepository;
+    private final ProductInCartRepository productInCartRepository;
 
-    public OrderService(Common common, OrderRepository orderRepository, ProductRepository productRepository, ProductInCartService productInCartService) {
+    public OrderService(Common common, OrderRepository orderRepository, ProductRepository productRepository, ProductInCartService productInCartService, ShopRepository shopRepository, ProductInCartRepository productInCartRepository) {
         this.common = common;
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
         this.productInCartService = productInCartService;
+        this.shopRepository = shopRepository;
+        this.productInCartRepository = productInCartRepository;
     }
 
-    public List<OrderDTO> getOrders(String token) throws Exception {
+    public List<OrderDTO> getShopOrders(String token) throws Exception {
         Long shopId = common.getUserId(token);
         List<Order> orders = orderRepository.findByShopId(shopId);
         List<ProductInCart> productInCarts = productInCartService.getShopCarts(token);
@@ -79,5 +82,47 @@ public class OrderService {
             throw new RuntimeException("Vous n'êtes pas autorisé à supprimer cette commande.");
         }
         orderRepository.deleteById(idOrder);
+    }
+
+    public List<UserOrderDTO> getUserOrders(String token) throws Exception {
+        Long userId = common.getUserId(token);
+        List<ProductInCart> productInCarts = productInCartRepository.findAllByIdUser(userId);
+
+        Map<Long, List<ShopDTO>> orderShopMap = new HashMap<>();
+        Set<Order> orders = new HashSet<>();
+
+        for (ProductInCart productInCart : productInCarts) {
+            Product product = productRepository.findById(productInCart.getIdProduct()).orElseThrow(() -> new Exception("Produit non trouvé."));
+            Shop shop = shopRepository.findById(product.getShopId()).orElseThrow(() -> new Exception("Magasin non trouvé."));
+            ShopDTO shopDTO = new ShopDTO();
+            shopDTO.setId(shop.getId());
+            shopDTO.setShopName(shop.getName());
+            shopDTO.setOpeningHours(shop.getOpening_hours());
+            shopDTO.setGpsCoordinates(shop.getGps_coordinates());
+
+            orders.add(orderRepository.findById(productInCart.getIdOrder()).orElseThrow(() -> new Exception("Commande non trouvée.")));
+            if (orderShopMap.containsKey(productInCart.getIdOrder())) {
+                List<ShopDTO> shops = orderShopMap.get(productInCart.getIdOrder());
+                if (shops.stream().noneMatch(existingShop -> existingShop.getId().equals(shopDTO.getId()))) {
+                    shops.add(shopDTO);
+                }
+            } else {
+                List<ShopDTO> shops = new ArrayList<>();
+                shops.add(shopDTO);
+                orderShopMap.put(productInCart.getIdOrder(), shops);
+            }
+        }
+
+        return orders.stream().map(order -> {
+            UserOrderDTO userOrderDTO = new UserOrderDTO();
+            userOrderDTO.setId(order.getId());
+            userOrderDTO.setStatus(order.getStatus());
+            userOrderDTO.setDate(order.getDate());
+
+            List<ShopDTO> shops = orderShopMap.get(order.getId());
+            userOrderDTO.setShops(new ArrayList<>(shops));
+
+            return userOrderDTO;
+        }).collect(Collectors.toList());
     }
 }
