@@ -1,5 +1,6 @@
 package fr.shoploc.shoplocBackend.order.controller;
 
+import fr.shoploc.shoplocBackend.common.models.Order;
 import fr.shoploc.shoplocBackend.order.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,11 +37,20 @@ public class OrderController {
     }
 
     @DeleteMapping("/{idOrder}")
-    public ResponseEntity<String> deleteOrder(@PathVariable(name = "idOrder") Long idOrder, @RequestHeader("Authorization") String authorizationHeader) {
-        String token = authorizationHeader.substring(7);
+    public ResponseEntity<Object> deleteOrder(@PathVariable(name = "idOrder") Long idOrder) {
         try {
-            orderService.deleteOrder(idOrder, token);
-            return ResponseEntity.ok("Commande supprimée.");
+            orderService.deleteOrder(idOrder);
+            return ResponseEntity.ok(HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @PatchMapping("/{idOrder}")
+    public ResponseEntity<Object> updateOrder(@PathVariable(name = "idOrder") Long idOrder, @RequestBody Order order) {
+        try {
+            return ResponseEntity.ok(orderService.updateOrder(idOrder, order));
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());

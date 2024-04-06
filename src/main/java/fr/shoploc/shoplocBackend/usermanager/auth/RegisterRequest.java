@@ -15,4 +15,6 @@ public class RegisterRequest {
     private String lastname;
     private String email;
     private String password;
+    private String carRegistrationNumber;
+    // Il prend pas la plaque d'immatriculation quand on s'inscrit
 }
