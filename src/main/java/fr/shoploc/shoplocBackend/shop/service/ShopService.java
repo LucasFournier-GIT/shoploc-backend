@@ -39,4 +39,13 @@ public class ShopService {
         }
         throw new Exception("Shop not found");
     }
+
+    public Long deleteShopById(Long id) throws Exception {
+        Shop shopToDelete = shopRepository.findById(id).orElse(null);
+        if (shopToDelete != null) {
+            shopRepository.delete(shopToDelete);
+            return(id);
+        }
+        throw new Exception("Shop not found");
+    }
 }
