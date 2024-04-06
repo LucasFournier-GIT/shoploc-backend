@@ -23,9 +23,13 @@ public class ShopController {
 
     // Endpoint pour créer un magasin
     @PostMapping
-    public int createShop(@RequestBody Shop magasin) {
-        //Shop createdMagasin = shopService.createShop(int id, String nom, String image, String adresse, String adresse_mail, String coordonnees_gps, String horaires_ouverture, String mot_de_passe, int id_ville);
-        return 1;
+    public ResponseEntity<Object> createShop(@RequestBody Shop shop) {
+        try {
+            return ResponseEntity.ok(shopService.createShop(shop));
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 
     // Endpoint pour supprimer un magasin depuis son id
