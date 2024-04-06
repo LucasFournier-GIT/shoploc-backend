@@ -48,4 +48,8 @@ public class ShopService {
         }
         throw new Exception("Shop not found");
     }
+
+    public Shop createShop(Shop shop) throws Exception {
+        return shopRepository.save(shop);
+    }
 }
