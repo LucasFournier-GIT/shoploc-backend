@@ -30,8 +30,12 @@ public class ShopController {
 
     // Endpoint pour supprimer un magasin depuis son id
     @DeleteMapping("/{id}")
-    public void deleteShopById(@PathVariable Long id) {
-        //shopService.deleteShopById(id);
+    public ResponseEntity<Object> deleteShopById(@PathVariable Long id)  {
+        try {
+            return ResponseEntity.ok(shopService.deleteShopById(id));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
     // Endpoint pour avoir un magasin depuis son id
