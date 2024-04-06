@@ -10,6 +10,7 @@ import java.util.List;
 @Setter
 public class OrderDTO {
     private Long id;
+    private Long userId;
     private String status;
     private Date date;
     private Boolean paid;

@@ -68,6 +68,14 @@ public class OrderService {
             orderDTO.setPaid(order.getPaid());
             orderDTO.setAmount(order.getAmount());
 
+            // Find the ProductInCart with the same orderId
+            Optional<ProductInCart> matchingProductInCart = productInCarts.stream()
+                    .filter(productInCart -> productInCart.getIdOrder().equals(order.getId()))
+                    .findFirst();
+
+            // If a matching ProductInCart is found, set the userId in the OrderDTO
+            matchingProductInCart.ifPresent(productInCart -> orderDTO.setUserId(productInCart.getIdUser()));
+
             // Add the products to the OrderDTO
             orderDTO.setProducts(orderProductsMap.get(order.getId()));
 
