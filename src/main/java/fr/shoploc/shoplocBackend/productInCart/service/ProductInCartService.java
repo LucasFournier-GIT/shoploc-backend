@@ -78,7 +78,7 @@ public class ProductInCartService {
         return productInCartRepository.findByIdProductIn(productIds);
     }
     
-    private List<CartDTO> getCarts(List<ProductInCart> productInCartList) throws Exception {
+    private List<CartDTO> getCarts(List<ProductInCart> productInCartList) {
         Map<Long, CartDTO> cartsByShop = new HashMap<>();
         for (ProductInCart productInCart : productInCartList) {
             Product product = productController.getProductById(productInCart.getIdProduct());
@@ -88,7 +88,9 @@ public class ProductInCartService {
 
             ProductDTO productDTO = new ProductDTO();
             productDTO.setId(product.getId());
-            productDTO.setProductName(product.getName());
+            productDTO.setName(product.getName());
+            productDTO.setDescription(product.getDescription());
+            productDTO.setAvailability(product.getAvailability());
             productDTO.setPrice(product.getPrice());
             productDTO.setQuantity(productInCart.getQuantity());
             productDTO.setImageUrl(product.getImageUrl());

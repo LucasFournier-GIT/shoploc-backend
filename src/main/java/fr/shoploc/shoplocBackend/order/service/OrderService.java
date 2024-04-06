@@ -13,6 +13,7 @@ import fr.shoploc.shoplocBackend.productInCart.service.ProductInCartService;
 import fr.shoploc.shoplocBackend.shop.repository.ShopRepository;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -41,6 +42,7 @@ public class OrderService {
 
         // Create a map to store the products for each order
         Map<Long, List<ProductDTO>> orderProductsMap = new HashMap<>();
+        Map<Long, Long> orderUserMap = new HashMap<>();
 
         // Populate the map
         for (ProductInCart productInCart : productInCarts) {
@@ -50,10 +52,14 @@ public class OrderService {
             // Create a new ProductDTO and set its attributes
             ProductDTO productDTO = new ProductDTO();
             productDTO.setId(product.getId());
-            productDTO.setProductName(product.getName());
+            productDTO.setName(product.getName());
+            productDTO.setDescription(product.getDescription());
+            productDTO.setAvailability(product.getAvailability());
             productDTO.setPrice(product.getPrice());
             productDTO.setQuantity(productInCart.getQuantity());
             productDTO.setImageUrl(product.getImageUrl());
+
+            orderUserMap.computeIfAbsent(productInCart.getIdOrder(), k -> productInCart.getIdUser());
 
             // Add the ProductDTO to the order's list in the map
             orderProductsMap.computeIfAbsent(productInCart.getIdOrder(), k -> new ArrayList<>()).add(productDTO);
@@ -68,13 +74,7 @@ public class OrderService {
             orderDTO.setPaid(order.getPaid());
             orderDTO.setAmount(order.getAmount());
 
-            // Find the ProductInCart with the same orderId
-            Optional<ProductInCart> matchingProductInCart = productInCarts.stream()
-                    .filter(productInCart -> productInCart.getIdOrder().equals(order.getId()))
-                    .findFirst();
-
-            // If a matching ProductInCart is found, set the userId in the OrderDTO
-            matchingProductInCart.ifPresent(productInCart -> orderDTO.setUserId(productInCart.getIdUser()));
+            orderDTO.setIdUser(orderUserMap.get(order.getId()));
 
             // Add the products to the OrderDTO
             orderDTO.setProducts(orderProductsMap.get(order.getId()));
@@ -83,12 +83,8 @@ public class OrderService {
         }).collect(Collectors.toList());
     }
 
-    public void deleteOrder(Long idOrder, String token) throws Exception {
-        Long shopId = common.getUserId(token);
-        Order order = orderRepository.findById(idOrder).orElseThrow(() -> new RuntimeException("Commande non trouvée."));
-        if (!order.getShopId().equals(shopId)) {
-            throw new RuntimeException("Vous n'êtes pas autorisé à supprimer cette commande.");
-        }
+    public void deleteOrder(Long idOrder) {
+        productInCartRepository.deleteByIdOrder(idOrder);
         orderRepository.deleteById(idOrder);
     }
 
@@ -132,5 +128,20 @@ public class OrderService {
 
             return userOrderDTO;
         }).collect(Collectors.toList());
+    }
+
+    public Order updateOrder(Long idOrder, Order order) throws Exception {
+        Order orderToUpdate = orderRepository.findById(idOrder).orElse(null);
+        if (orderToUpdate != null) {
+            for (Field field : Order.class.getDeclaredFields()) {
+                field.setAccessible(true);
+                Object newValue = field.get(order);
+                if (newValue != null) {
+                    field.set(orderToUpdate, newValue);
+                }
+            }
+            return orderRepository.save(orderToUpdate);
+        }
+        throw new Exception("Product not found");
     }
 }
