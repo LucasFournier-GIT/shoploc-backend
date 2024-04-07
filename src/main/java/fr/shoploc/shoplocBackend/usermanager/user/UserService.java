@@ -45,4 +45,13 @@ public class UserService {
         }
         throw new Exception("User not found");
     }
+
+    public Long getUserId(String email) throws Exception {
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isPresent()) {
+            return user.get().getId();
+        } else {
+            throw new Exception("User not found");
+        }
+    }
 }
