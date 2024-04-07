@@ -35,6 +35,16 @@ public class ProductController {
         return productService.getAllProductsByShopId(shopId);
     }
 
+    @PostMapping
+    public ResponseEntity<Object> createProduct(@RequestBody Product product) {
+        try {
+            return ResponseEntity.ok(productService.createProduct(product));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
     @PatchMapping("/{id}")
     public ResponseEntity<?> updateProduct(@PathVariable Long id, @RequestBody Product product) {
         try {
