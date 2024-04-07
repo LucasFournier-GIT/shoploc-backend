@@ -46,7 +46,8 @@ public class ShopController {
     @GetMapping("/{id}")
     public ResponseEntity<Object> getShopById(@PathVariable Long id) {
         try {
-            return ResponseEntity.ok(shopService.getShopById(id));
+            Shop shop = shopService.getShopById(id);
+            return ResponseEntity.ok(shop);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }

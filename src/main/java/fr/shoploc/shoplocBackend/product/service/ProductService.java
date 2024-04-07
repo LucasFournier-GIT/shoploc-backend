@@ -28,7 +28,6 @@ public class ProductService {
 
     public List<Product> getAllProductsByShopId(Long shopId) {
         return productRepository.findAllByShopId(shopId);
-
     }
 
     public Product updateProduct(Long id, Product product) throws Exception {

@@ -34,6 +34,7 @@ public class SecurityConfig {
                     config.setAllowedOrigins(List.of("http://localhost:19006")); // Remplacez par votre URL frontend
                     config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH"));
                     config.setAllowedHeaders(List.of("*"));
+                    config.setAllowCredentials(true);
                     return config;
                 }))
                 .authorizeHttpRequests(authorizeRequests ->
