@@ -67,6 +67,9 @@ public class ProductInCartService {
         Long userId = common.getUserId(token);
 
         List<ProductInCart> productInCartList = productInCartRepository.findAllByIdUser(userId);
+        productInCartList = productInCartList.stream()
+                .filter(productInCart -> productInCart.getIdOrder() == null)
+                .collect(Collectors.toList());
         return getCarts(productInCartList);
     }
 

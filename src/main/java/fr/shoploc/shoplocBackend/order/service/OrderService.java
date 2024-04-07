@@ -11,6 +11,7 @@ import fr.shoploc.shoplocBackend.product.repository.ProductRepository;
 import fr.shoploc.shoplocBackend.productInCart.repository.ProductInCartRepository;
 import fr.shoploc.shoplocBackend.productInCart.service.ProductInCartService;
 import fr.shoploc.shoplocBackend.shop.repository.ShopRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
@@ -83,6 +84,7 @@ public class OrderService {
         }).collect(Collectors.toList());
     }
 
+    @Transactional
     public void deleteOrder(Long idOrder) {
         productInCartRepository.deleteByIdOrder(idOrder);
         orderRepository.deleteById(idOrder);
@@ -104,6 +106,9 @@ public class OrderService {
             shopDTO.setOpeningHours(shop.getOpening_hours());
             shopDTO.setGpsCoordinates(shop.getGps_coordinates());
 
+            if(productInCart.getIdOrder() == null) {
+                continue;
+            }
             orders.add(orderRepository.findById(productInCart.getIdOrder()).orElseThrow(() -> new Exception("Commande non trouvée.")));
             if (orderShopMap.containsKey(productInCart.getIdOrder())) {
                 List<ShopDTO> shops = orderShopMap.get(productInCart.getIdOrder());
@@ -143,5 +148,25 @@ public class OrderService {
             return orderRepository.save(orderToUpdate);
         }
         throw new Exception("Product not found");
+    }
+
+    public Object createOrder(Order order, String token) throws Exception {
+        Long userId = common.getUserId(token);
+        List<Product> products = productRepository.findAllByShopId(order.getShopId());
+        List<Long> productIds = products.stream().map(Product::getId).collect(Collectors.toList());
+        List<ProductInCart> productInCarts = productInCartRepository.findByIdUserAndIdProductIn(userId, productIds);
+
+        if (productInCarts.isEmpty()) {
+            throw new Exception("Aucun panier enregistré pour cet utilisateur.");
+        }
+
+        Order savedOrder = orderRepository.save(order);
+
+        for (ProductInCart productInCart : productInCarts) {
+            productInCart.setIdOrder(savedOrder.getId());
+            productInCartRepository.save(productInCart);
+        }
+
+        return savedOrder;
     }
 }

@@ -11,7 +11,6 @@ import lombok.Setter;
 public class Shop {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String image_url;
@@ -21,14 +20,13 @@ public class Shop {
     private String opening_hours;
     private String password;
 
-    public Shop(String name, String image_url, String address, String email, String gps_coordinates, String opening_hours, String password, int city_id){
+    public Shop(String name, String image_url, String address, String email, String gps_coordinates, String opening_hours){
         this.name = name;
         this.image_url = image_url;
         this.address = address;
         this.email = email;
         this.gps_coordinates = gps_coordinates;
         this.opening_hours = opening_hours;
-        this.password = password;
     }
 
     public Shop() {

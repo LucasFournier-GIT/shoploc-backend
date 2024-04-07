@@ -25,6 +25,17 @@ public class OrderController {
         }
     }
 
+    @PostMapping
+    public ResponseEntity<Object> createOrder(@RequestBody Order order, @RequestHeader("Authorization") String authorizationHeader) {
+        try {
+            String token = authorizationHeader.substring(7);
+            return ResponseEntity.ok().body(orderService.createOrder(order, token));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
     @GetMapping("/user")
     public ResponseEntity<Object> getUserOrders(@RequestHeader("Authorization") String authorizationHeader) {
         String token = authorizationHeader.substring(7);
